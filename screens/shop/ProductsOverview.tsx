@@ -1,15 +1,17 @@
 import { View,FlatList } from 'react-native';
 import React, {FC} from 'react';
-import {RootStateOrAny,useSelector} from 'react-redux';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import ProductListItem from '../../components/shop/ProductListItem';
 import {Color} from "../../constants/Colors";
+import * as CartActions from "../../store/actions/cart-actions";
+import {ADD_TO_CART} from "../../store/actions/cart-actions";
 
 
 
 
 
 const ProductsOverview:FC=(props:any) => {
-
+    let dispatch=useDispatch();
   const products = useSelector((state:RootStateOrAny)=>state.products.availableProducts);
   return (
     <View style={{backgroundColor:Color.skin}}>
@@ -18,7 +20,8 @@ const ProductsOverview:FC=(props:any) => {
               props.navigation.navigate('productDetail',itemData.item)
           }}
           onAddToCart={()=>{
-              props.navigation.navigate('productDetail')
+              dispatch(CartActions.addToCart(itemData.item));
+              props.navigation.navigate('cart')
           }
           }
           />;
@@ -28,6 +31,4 @@ const ProductsOverview:FC=(props:any) => {
 };
 
 export default ProductsOverview;
-
-
 

@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {createStore, combineReducers} from 'redux';
 import productsReducer from './store/reducers/product-reducer';
+import cartReducer from './store/reducers/cart-reducer';
 import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 
@@ -10,12 +11,11 @@ import ShopNavigator from './navigation/ShopNavigator';
 
 
 const rootReducer = combineReducers({
-  products:productsReducer
+  products:productsReducer,
+  cart:cartReducer
 });
 
 const store=createStore(rootReducer);
-
-
 
 export default function App() {
     const fetchFont= ()=>{
@@ -32,7 +32,6 @@ export default function App() {
         }} onError={()=>{setFontloaded(false)}} />
 
     }
-
 
   return (
 
