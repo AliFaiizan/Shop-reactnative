@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e02cff12-0ed2-4bf5-8338-c5e8ca323cb0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/UI/CHeaherButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/cart-item.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/store/actions/cart-actions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/store/reducers/cart-reducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/shop/cartitem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/dummy-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Data/dummy-data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/models/product.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/ShopNavigator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/ShopNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/shop/CartScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shop/CartScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/shop/ProductDetailScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shop/ProductDetailScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/shop/ProductsOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shop/ProductsOverview.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +50,7 @@
       <option name="presentableId" value="Default" />
       <updated>1644748201711</updated>
       <workItem from="1644748204333" duration="15185000" />
+      <workItem from="1645133805518" duration="1265000" />
     </task>
     <servers />
   </component>

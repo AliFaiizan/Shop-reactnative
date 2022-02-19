@@ -1,11 +1,13 @@
-import {ADD_TO_CART}from '../actions/cart-actions';
+import {ADD_TO_CART, DELETE_FROM_CART}from '../actions/cart-actions';
 import CartItem from "../../models/cart-item";
+
 
 
 type state={
     item:any,
     totalAmount:number
 }
+
 const initailState:state={
     item:{},
     totalAmount:0
@@ -13,7 +15,9 @@ const initailState:state={
 
 export default (state=initailState,action:any)=>{
     let updatedOrNewCartItem:CartItem;
+    let updatedCartItem;
     switch (action.type) {
+        //ADD TO CART
         case ADD_TO_CART:
             const {id,price,title}=action.product;
 
@@ -38,6 +42,36 @@ export default (state=initailState,action:any)=>{
                 item:{...state.item, [id]:updatedOrNewCartItem },
                 totalAmount:state.totalAmount+price
             }
+        //DELETE FROM CART
+        case DELETE_FROM_CART:
+            const pid:any=action.pid
+            const currentQuantity=state.item[pid].quantity;
+             const selectedProduct = state.item[pid];
+            if(currentQuantity>1){
+               
+
+                const updatedItem={
+                   
+                    quantity:selectedProduct.quantity-1,
+                    productPrice:selectedProduct.productPrice,
+                    productTitle:selectedProduct.productTitle,
+                    sum:selectedProduct.sum-selectedProduct.productPrice
+
+                }
+               updatedCartItem={...state.item,[pid]:updatedItem}     
+                
+            }else {
+                updatedCartItem= {...state.item};
+                delete updatedCartItem[pid];
+            }
+
+            return {
+                ...state, 
+                item:updatedCartItem,
+                totalAmount:state.totalAmount-selectedProduct.productPrice
+            }
+
+
     }
     return state;
 }
