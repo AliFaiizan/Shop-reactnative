@@ -6,6 +6,7 @@ import {RootStateOrAny, useDispatch, useSelector} from "react-redux";
 
 import CartListItem from '../../components/shop/cartitem';
 import * as CartAction from '../../store/actions/cart-actions';
+import * as OrderAction from '../../store/actions/order-action';
 
 
 const CartScreen = (props:any) => {
@@ -30,7 +31,9 @@ const CartScreen = (props:any) => {
         <View style={screen}>
             <View style={summary}>
                 <Text style={summaryText}>Total: <Text style={amount}>${cartAmount.toFixed(2)}</Text></Text>
-                <CButton title='OrderNow' color={Color.Primary} onPress={()=>{console.log('not disables')}} />
+                <CButton title='OrderNow' color={Color.Primary} onPress={()=>{
+                    dispatch(OrderAction.add_Order(cartItems, cartAmount));// order functionality
+                }} />
             </View>
             <FlatList data={cartItems} keyExtractor={item => item.productid} renderItem={({item})=>{
                 return <CartListItem quantity={item.quantity} title={item.productTitle}

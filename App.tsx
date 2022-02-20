@@ -2,7 +2,9 @@
 import React, {useState} from 'react';
 import {createStore, combineReducers} from 'redux';
 import productsReducer from './store/reducers/product-reducer';
-import cartReducer from './store/reducers/cart-reducer';
+import cartReducer from './store/reducers/cart-reducer'; 
+import orderReducer from "./store/reducers/order-reducer";
+
 import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 
@@ -10,9 +12,11 @@ import {Provider} from 'react-redux';
 import ShopNavigator from './navigation/ShopNavigator';
 
 
+
 const rootReducer = combineReducers({
-  products:productsReducer,
-  cart:cartReducer
+  products: productsReducer,
+  cart: cartReducer,
+  order: orderReducer,
 });
 
 const store=createStore(rootReducer);
