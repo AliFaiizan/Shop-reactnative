@@ -1,4 +1,5 @@
 
+import "react-native-gesture-handler";
 import React, {useState} from 'react';
 import {createStore, combineReducers} from 'redux';
 import productsReducer from './store/reducers/product-reducer';

@@ -10,9 +10,20 @@ import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import CHeaderButton from "../components/UI/CHeaherButton";
 import CartScreen from "../screens/shop/CartScreen";
+import OrderScreen from '../screens/shop/OrderScreen';
+import { Color } from '../constants/Colors';
 
 
 
+const defaultNavigationOption = {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: Platform.OS === "android" ? "#E5E2AC" : "#fff",
+    },
+    headerTintColor: Platform.OS === "android" ? "#333333" : "",
+    headerTitle: "All Products",
+  },
+};
 
 
 const ProductsNavigator = createStackNavigator(
@@ -35,18 +46,27 @@ const ProductsNavigator = createStackNavigator(
     productDetail:ProductDetailScreen,
     Cart:CartScreen
   },
-  {
-    defaultNavigationOptions: {
-      headerStyle: {
-        
-        backgroundColor: Platform.OS === "android" ? "#E5E2AC" : "#fff",
-      },
-      headerTintColor: Platform.OS === "android" ? "#333333" : "",
-      headerTitle:'All Products'
-    },
-  }
+    defaultNavigationOption
 );
 
+const OrderNavigator=createStackNavigator({
+  order:{
+    screen:OrderScreen,
+    navigationOptions:{
+    }
+  }
+},
+    defaultNavigationOption 
+)
 
-export default createAppContainer(ProductsNavigator);
+const ShopNavigator=createDrawerNavigator({
+  product:ProductsNavigator,
+  Order:OrderNavigator
+},{
+  contentOptions:{
+    activeTintColor:Color.Primary
+  }
+})
+
+export default createAppContainer(ShopNavigator);
 
