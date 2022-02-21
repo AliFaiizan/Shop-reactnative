@@ -1,7 +1,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import React from "react";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createDrawerNavigator } from "react-navigation-drawer";
+import { createDrawerNavigator,DrawerActions } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 
 import { Platform } from 'react-native';
@@ -33,6 +33,19 @@ const ProductsNavigator = createStackNavigator(
       navigationOptions:(navData)=>{
         return {
           headerTitle:'All Products',
+          headerLeft:() => {
+             return (
+               <HeaderButtons HeaderButtonComponent={CHeaderButton}>
+                 <Item
+                   title="Menu"
+                   iconName="menu"
+                   onPress={() => {
+                     navData.navigation.dispatch(DrawerActions.toggleDrawer())
+                   }}
+                 />
+               </HeaderButtons>
+             );
+          },
           headerRight:()=>{
             return <HeaderButtons HeaderButtonComponent={CHeaderButton} >
               <Item title='cart' iconName='cart' onPress={()=>{
