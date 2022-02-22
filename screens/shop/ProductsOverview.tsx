@@ -9,6 +9,7 @@ import CHeaderButton from "../../components/UI/CHeaherButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useNavigation } from "@react-navigation/native";
 
+
 const ProductsOverview: FC = (props: any) => {
   let dispatch = useDispatch();
   const products = useSelector(
@@ -67,6 +68,7 @@ export const screenOptions = () => {
         </HeaderButtons>
       );
     },
+    
   };
 };
 

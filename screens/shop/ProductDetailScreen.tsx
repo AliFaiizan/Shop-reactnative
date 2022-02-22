@@ -26,14 +26,11 @@ const ProductDetailScreen = ({ navigation }: any) => {
     </ScrollView>
   );
 };
-ProductDetailScreen.navigationOptions = (navData: any) => {
+
+export const screenOptions = (navData: any) => {
   return {
     headerTitle: navData.navigation.getParam("title"),
   };
-};
-
-export const screenOptions = {
-  headerTitle: "Detail",
 };
 
 export default ProductDetailScreen;

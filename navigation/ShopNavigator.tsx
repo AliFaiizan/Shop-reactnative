@@ -21,10 +21,16 @@ import ProductDetailScreen, {
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons, Entypo } from "@expo/vector-icons";
+
+
+//Stack Creation
 
 const productsStack = createNativeStackNavigator();
 const orderStack = createNativeStackNavigator();
 const shopDrawer = createDrawerNavigator();
+
+
 
 const ProductsNavigator = () => {
   // this returns full produt navigator
@@ -64,16 +70,26 @@ const OrderNavigator = () => {
 
 const ShopDrawerNavigator = () => {
   return (
-    <shopDrawer.Navigator screenOptions={defaultNavigationOption}>
+    <shopDrawer.Navigator screenOptions={drawerNavigationOption}>
       <shopDrawer.Screen
         name="Products"
         component={ProductsNavigator}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          drawerIcon: (props) => {
+            return <Ionicons size={23} name="home" color={props.color} />;
+          },
+        }}
       />
       <shopDrawer.Screen
         name="Orders"
         component={OrderNavigator}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          drawerIcon: (props) => {
+            return <Entypo size={24} name='shopping-bag' color={props.color} />;
+          },
+        }}
       />
     </shopDrawer.Navigator>
   );
@@ -94,46 +110,17 @@ const defaultNavigationOption = {
   headerTintColor: Platform.OS === "android" ? "#333333" : "",
 };
 
+const drawerNavigationOption = {
+  ...defaultNavigationOption,
+  drawerStyle: {
+    backgroundColor: Color.skin,
+    width: 300,
+  },
+  drawerLabelStyle:{   
+    marginLeft:-25
+  },
+  drawerActiveBackgroundColor:Color.Primary,
+  
+};
 export default AppNavigator;
 
-// const ProductsNavigator = createStackNavigator(
-//   {
-//     productOverview: {
-//       screen:ProductsOverview,
-//       navigationOptions:(navData)=>{
-//         return {
-//           headerTitle:'All Products',
-//           headerRight:()=>{
-//             return <HeaderButtons HeaderButtonComponent={CHeaderButton} >
-//               <Item title='cart' iconName='cart' onPress={()=>{
-//                 navData.navigation.navigate('Cart');
-//               }}  />
-//             </HeaderButtons>
-//           }
-//         }
-//       }
-//     },
-//     productDetail:ProductDetailScreen,
-//     Cart:CartScreen
-//   },
-//     defaultNavigationOption
-// );
-
-// const OrderNavigator=createStackNavigator({
-//   order:{
-//     screen:OrderScreen,
-//     navigationOptions:{
-//     }
-//   }
-// },
-//   defaultNavigationOption
-// )
-
-// const ShopNavigator=createDrawerNavigator({
-//   product:ProductsNavigator,
-//   Order:OrderNavigator
-// },{
-//   contentOptions:{
-//     activeTintColor:Color.Primary
-//   }
-// })
