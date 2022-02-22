@@ -1,85 +1,139 @@
-import {createStackNavigator} from 'react-navigation-stack';
 import React from "react";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createDrawerNavigator,DrawerActions } from "react-navigation-drawer";
-import { createAppContainer } from "react-navigation";
 
-import { Platform } from 'react-native';
-import ProductsOverview from "../screens/shop/ProductsOverview";
-import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
-import {HeaderButtons, Item} from "react-navigation-header-buttons";
-import CHeaderButton from "../components/UI/CHeaherButton";
-import CartScreen from "../screens/shop/CartScreen";
-import OrderScreen from '../screens/shop/OrderScreen';
-import { Color } from '../constants/Colors';
+import { Platform } from "react-native";
+import { Color } from "../constants/Colors";
 
+//Version 5 migraiton
 
+import ProductsOverview, {
+  screenOptions as productOverviewOptions,
+} from "../screens/shop/ProductsOverview";
+import CartScreen, {
+  screenOptions as CartOptions,
+} from "../screens/shop/CartScreen";
+import OrderScreen, {
+  screenOptions as OrderOptions,
+} from "../screens/shop/OrderScreen";
+import ProductDetailScreen, {
+  screenOptions as productDetailOptions,
+} from "../screens/shop/ProductDetailScreen";
 
-const defaultNavigationOption = {
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: Platform.OS === "android" ? "#E5E2AC" : "#fff",
-    },
-    headerTintColor: Platform.OS === "android" ? "#333333" : "",
-    headerTitle: "All Products",
-  },
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const productsStack = createNativeStackNavigator();
+const orderStack = createNativeStackNavigator();
+const shopDrawer = createDrawerNavigator();
+
+const ProductsNavigator = () => {
+  // this returns full produt navigator
+  return (
+    <productsStack.Navigator screenOptions={defaultNavigationOption}>
+      <productsStack.Screen
+        name="Product"
+        component={ProductsOverview}
+        options={productOverviewOptions}
+      />
+
+      <productsStack.Screen
+        name="Details"
+        component={ProductDetailScreen}
+        options={productDetailOptions}
+      />
+      <productsStack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={CartOptions}
+      />
+    </productsStack.Navigator>
+  );
 };
 
+const OrderNavigator = () => {
+  return (
+    <orderStack.Navigator screenOptions={defaultNavigationOption}>
+      <orderStack.Screen
+        name="Order"
+        component={OrderScreen}
+        options={OrderOptions}
+      />
+    </orderStack.Navigator>
+  );
+};
 
-const ProductsNavigator = createStackNavigator(
-  {
-    productOverview: {
-      screen:ProductsOverview,
-      navigationOptions:(navData)=>{
-        return {
-          headerTitle:'All Products',
-          headerLeft:() => {
-             return (
-               <HeaderButtons HeaderButtonComponent={CHeaderButton}>
-                 <Item
-                   title="Menu"
-                   iconName="menu"
-                   onPress={() => {
-                     navData.navigation.dispatch(DrawerActions.toggleDrawer())
-                   }}
-                 />
-               </HeaderButtons>
-             );
-          },
-          headerRight:()=>{
-            return <HeaderButtons HeaderButtonComponent={CHeaderButton} >
-              <Item title='cart' iconName='cart' onPress={()=>{
-                navData.navigation.navigate('Cart');
-              }}  />
-            </HeaderButtons>
-          }
-        }
-      }
-    },
-    productDetail:ProductDetailScreen,
-    Cart:CartScreen
+const ShopDrawerNavigator = () => {
+  return (
+    <shopDrawer.Navigator screenOptions={defaultNavigationOption}>
+      <shopDrawer.Screen
+        name="Products"
+        component={ProductsNavigator}
+        options={{ headerShown: false }}
+      />
+      <shopDrawer.Screen
+        name="Orders"
+        component={OrderNavigator}
+        options={{ headerShown: false }}
+      />
+    </shopDrawer.Navigator>
+  );
+};
+
+const AppNavigator = (props: any) => {
+  return (
+    <NavigationContainer>
+      <ShopDrawerNavigator />
+    </NavigationContainer>
+  );
+};
+
+const defaultNavigationOption = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? "#E5E2AC" : "#fff",
   },
-    defaultNavigationOption
-);
+  headerTintColor: Platform.OS === "android" ? "#333333" : "",
+};
 
-const OrderNavigator=createStackNavigator({
-  order:{
-    screen:OrderScreen,
-    navigationOptions:{
-    }
-  }
-},
-    defaultNavigationOption 
-)
+export default AppNavigator;
 
-const ShopNavigator=createDrawerNavigator({
-  product:ProductsNavigator,
-  Order:OrderNavigator
-},{
-  contentOptions:{
-    activeTintColor:Color.Primary
-  }
-})
+// const ProductsNavigator = createStackNavigator(
+//   {
+//     productOverview: {
+//       screen:ProductsOverview,
+//       navigationOptions:(navData)=>{
+//         return {
+//           headerTitle:'All Products',
+//           headerRight:()=>{
+//             return <HeaderButtons HeaderButtonComponent={CHeaderButton} >
+//               <Item title='cart' iconName='cart' onPress={()=>{
+//                 navData.navigation.navigate('Cart');
+//               }}  />
+//             </HeaderButtons>
+//           }
+//         }
+//       }
+//     },
+//     productDetail:ProductDetailScreen,
+//     Cart:CartScreen
+//   },
+//     defaultNavigationOption
+// );
 
-export default createAppContainer(ShopNavigator);
+// const OrderNavigator=createStackNavigator({
+//   order:{
+//     screen:OrderScreen,
+//     navigationOptions:{
+//     }
+//   }
+// },
+//   defaultNavigationOption
+// )
 
+// const ShopNavigator=createDrawerNavigator({
+//   product:ProductsNavigator,
+//   Order:OrderNavigator
+// },{
+//   contentOptions:{
+//     activeTintColor:Color.Primary
+//   }
+// })
