@@ -1,5 +1,6 @@
 import {ADD_TO_CART, DELETE_FROM_CART}from '../actions/cart-actions';
 import CartItem from "../../models/cart-item";
+import { ADD_ORDER } from '../actions/order-action';
 
 
 
@@ -70,6 +71,9 @@ export default (state=initailState,action:any)=>{
                 item:updatedCartItem,
                 totalAmount:state.totalAmount-selectedProduct.productPrice
             }
+
+        case ADD_ORDER:
+            return initailState;
 
 
     }

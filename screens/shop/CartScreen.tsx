@@ -28,6 +28,8 @@ const CartScreen = (props: any) => {
       a.productid > b.productid ? 1 : -1
     );
   });
+
+  
   let dispatch = useDispatch();
   const { screen, summary, summaryText, amount } = styles; //extractign styles
   return (

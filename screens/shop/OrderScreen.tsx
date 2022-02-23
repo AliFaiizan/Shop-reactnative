@@ -3,6 +3,7 @@ import React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CHeaderButton from "../../components/UI/CHeaherButton";
+import OrderItem from "../../components/shop/OrderItem";
 
 const OrderScreen = () => {
   const orders = useSelector((state: RootStateOrAny) => {
@@ -13,7 +14,9 @@ const OrderScreen = () => {
       <FlatList
         data={orders}
         renderItem={(itemData) => {
-          return <Text>{itemData.item.totalAmount}</Text>;
+          return <OrderItem
+         item={itemData.item}
+           />;
         }}
       />
     </>

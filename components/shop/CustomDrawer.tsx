@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   search:{
     flexDirection:'row',
     alignItems:'center',
-    elevation:10,
+    elevation:8,
     width:'80%',
     height:40,
     borderRadius:5,
