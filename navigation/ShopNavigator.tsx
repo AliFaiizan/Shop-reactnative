@@ -18,10 +18,12 @@ import ProductDetailScreen, {
   screenOptions as productDetailOptions,
 } from "../screens/shop/ProductDetailScreen";
 
+
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons, Entypo } from "@expo/vector-icons";
+import CustomDrawer from "../components/shop/CustomDrawer";
 
 
 //Stack Creation
@@ -70,7 +72,7 @@ const OrderNavigator = () => {
 
 const ShopDrawerNavigator = () => {
   return (
-    <shopDrawer.Navigator screenOptions={drawerNavigationOption}>
+    <shopDrawer.Navigator drawerContent={(props)=>{return <CustomDrawer {...props} />}} screenOptions={drawerNavigationOption}>
       <shopDrawer.Screen
         name="Products"
         component={ProductsNavigator}
