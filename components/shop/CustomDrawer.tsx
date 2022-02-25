@@ -3,7 +3,7 @@ import React from 'react'
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import { Color } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-
+// custom draaer component 
 
 const CustomDrawer = (props:any) => {
 
