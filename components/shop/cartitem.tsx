@@ -15,13 +15,13 @@ const CartItem = ({onRemove,quantity,amount,title}:any) => {
             </View>
             <View style={itemData}>
                 <Text style={mainText}>${amount}</Text>
-                <TouchableOpacity onPress={onRemove} style={deleteButton}>
+                {onRemove&&<TouchableOpacity onPress={onRemove} style={deleteButton}>
                     <Ionicons
                         name={Platform.OS==='android'?'md-trash':'ios-trash'}
                         size={23}
                         color='red'
                     />
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
         </View>
         </>

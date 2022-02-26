@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import CButton from './Button';
 import CartItem from './cartitem';
 import { Color } from '../../constants/Colors';
@@ -7,6 +7,9 @@ import moment from 'moment';
 
 
 const OrderItem = ({item}:any) => {
+
+    const [showDetail,setShowDetail]=useState(false);
+    
 
     const {orderItem,summary,totalAmount,date}=styles;
     const Mdate=moment().format('MMMM Do YYYY, hh:mm') //Moment date
@@ -20,10 +23,14 @@ const OrderItem = ({item}:any) => {
       <CButton
         title="Show Detail"
         onPress={() => {
+            setShowDetail((prevState) => { return !prevState })
           console.log("show detail button");
         }}
         color={Color.Primary}
       />
+      {showDetail && <View style={styles.cartitem}>
+            {item.item.map((item:any) => { return <CartItem key={item.productid} quantity={item.quantity} title={item.productTitle} amount={item.sum}  /> })}
+          </View>}
     </View>
   );
 }
@@ -59,4 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color:'#888'
   },
+  cartitem:{
+      paddingTop:10,
+  }
 });
