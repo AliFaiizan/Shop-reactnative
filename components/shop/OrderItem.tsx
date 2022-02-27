@@ -21,10 +21,10 @@ const OrderItem = ({item}:any) => {
         <Text style={date}>{Mdate}</Text>
       </View> 
       <CButton
-        title="Show Detail"
+        title={showDetail?"Hide Detail":"Show Detail"}
         onPress={() => {
             setShowDetail((prevState) => { return !prevState })
-          console.log("show detail button");
+         
         }}
         color={Color.Primary}
       />
@@ -68,5 +68,6 @@ const styles = StyleSheet.create({
   },
   cartitem:{
       paddingTop:10,
+      width:'100%'
   }
 });
