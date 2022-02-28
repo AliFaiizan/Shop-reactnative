@@ -24,6 +24,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import CustomDrawer from "../components/shop/CustomDrawer";
+import UserProductsScreen from "../screens/user/UserProductsScreen";
 
 
 //Stack Creation
@@ -70,9 +71,26 @@ const OrderNavigator = () => {
   );
 };
 
+const AdminNavigator = () => {
+  return (
+    <orderStack.Navigator screenOptions={defaultNavigationOption}>
+      <orderStack.Screen
+        name="Admin"
+        component={UserProductsScreen}
+        options={OrderOptions} // later replace with own options
+      />
+    </orderStack.Navigator>
+  );
+};
+
 const ShopDrawerNavigator = () => {
   return (
-    <shopDrawer.Navigator drawerContent={(props)=>{return <CustomDrawer {...props} />}} screenOptions={drawerNavigationOption}>
+    <shopDrawer.Navigator
+      drawerContent={(props) => {
+        return <CustomDrawer {...props} />;
+      }}
+      screenOptions={drawerNavigationOption}
+    >
       <shopDrawer.Screen
         name="Products"
         component={ProductsNavigator}
@@ -89,7 +107,17 @@ const ShopDrawerNavigator = () => {
         options={{
           headerShown: false,
           drawerIcon: (props) => {
-            return <Entypo size={24} name='shopping-bag' color={props.color} />;
+            return <Entypo size={24} name="shopping-bag" color={props.color} />;
+          },
+        }}
+      />
+      <shopDrawer.Screen
+        name="Admin"
+        component={AdminNavigator}
+        options={{
+          headerShown: false,
+          drawerIcon: (props) => {
+            return <Ionicons size={24} name="create" color={props.color} />;
           },
         }}
       />

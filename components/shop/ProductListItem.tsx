@@ -30,7 +30,7 @@ export default function ProductListItem({item,onViewDetail,onAddToCart}:any) {
 
           <View style={actions} >
            <CButton title='View Detail' onPress={onViewDetail} color={Color.Accent} />
-           <CButton title='Add to Cart' onPress={onAddToCart} color={Color.Primary} />
+           {onAddToCart&&<CButton title='Add to Cart' onPress={onAddToCart} color={Color.Primary} />}
           </View>
             </>
       </View>
