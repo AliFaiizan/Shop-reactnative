@@ -5,9 +5,10 @@ import { Color } from "../../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as CartAction from "../../store/actions/cart-actions";
 
-const ProductDetailScreen = ({ navigation }: any) => {
+const ProductDetailScreen = ({route, navigation }: any) => {
+  
   let dispatch = useDispatch();
-  let product = navigation.state.params;
+  let product = route.params;
   let { image, description, price, actions } = styles;
   return (
     <ScrollView>
@@ -29,7 +30,7 @@ const ProductDetailScreen = ({ navigation }: any) => {
 
 export const screenOptions = (navData: any) => {
   return {
-    headerTitle: navData.navigation.getParam("title"),
+    headerTitle: navData.route.params.title,
   };
 };
 

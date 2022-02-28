@@ -17,7 +17,7 @@ const OrderItem = ({item}:any) => {
   return (
     <View style={orderItem}>
       <View style={summary}>
-        <Text style={totalAmount}>${item.totalAmount}</Text>
+        <Text style={totalAmount}>${item.totalAmount.toFixed(2)}</Text>
         <Text style={date}>{Mdate}</Text>
       </View> 
       <CButton

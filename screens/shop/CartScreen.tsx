@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList ,Alert} from "react-native";
 import CButton from "../../components/shop/Button";
 import { Color } from "../../constants/Colors";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -42,9 +42,18 @@ const CartScreen = (props: any) => {
           title="OrderNow"
           color={Color.Primary}
           onPress={() => {
-            dispatch(OrderAction.add_Order(cartItems, cartAmount)); // order functionality
-          }}
-        />
+            if (cartAmount <= 0) {
+              Alert.alert("CART IS EMPTY", "There is nothing to order", [
+                {
+                  text: "OK",
+                  style:'default',
+                },
+              ]);
+          }else{
+            dispatch(OrderAction.add_Order(cartItems, cartAmount)); //order functionality
+          }
+          } }
+          />
       </View>
       <FlatList
         data={cartItems}

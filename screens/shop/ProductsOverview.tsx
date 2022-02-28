@@ -24,7 +24,7 @@ const ProductsOverview: FC = (props: any) => {
             <ProductListItem
               item={itemData.item}
               onViewDetail={() => {
-                props.navigation.navigate("Detail", itemData.item);
+                props.navigation.navigate("Details", itemData.item);
               }}
               onAddToCart={() => {
                 dispatch(CartActions.addToCart(itemData.item));
@@ -62,7 +62,7 @@ export const screenOptions = () => {
             title="cart"
             iconName="cart"
             onPress={() => {
-              navigation.navigate({key:'Cart'})
+              navigation.navigate('Cart')
             }}
           />
         </HeaderButtons>
