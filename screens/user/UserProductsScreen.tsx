@@ -4,6 +4,7 @@ import ProductListItem from '../../components/shop/ProductListItem'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import CButton from '../../components/shop/Button'
 import { Color } from '../../constants/Colors'
+import * as CartAction from '../../store/actions/product-action' 
 
 
 
@@ -23,8 +24,8 @@ const UserProductsScreen = () => {
             <CButton
               title="Delete"
               onPress={() => { 
-                  return userProduct.filter((i:any) => { return item.id!==i.id })
-               }}
+                    CartAction.deleteProduct(item.id)
+                }}
               color={Color.Primary}
             />
           </ProductListItem>

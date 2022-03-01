@@ -1,6 +1,7 @@
 import {ADD_TO_CART, DELETE_FROM_CART}from '../actions/cart-actions';
 import CartItem from "../../models/cart-item";
 import { ADD_ORDER } from '../actions/order-action';
+import { DELETE_PRODUCT } from '../actions/product-action';
 
 
 
@@ -74,6 +75,11 @@ export default (state=initailState,action:any)=>{
 
         case ADD_ORDER:
             return initailState;
+
+        case DELETE_PRODUCT: // will do it later
+            state.item.filter((prod:any) => { 
+            return prod.id !== action.prodId
+          })
 
 
     }

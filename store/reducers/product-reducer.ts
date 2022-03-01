@@ -1,5 +1,6 @@
 
-import PRODUCTS from '../../Data/dummy-data';
+import PRODUCTS from '../../Data/dummy-data'; 
+import { DELETE_PRODUCT } from '../actions/product-action';
 
 
 const initialState={
@@ -13,6 +14,18 @@ const initialState={
 
 export default function(state= initialState,action:any){
    
+    switch(action.type){
+      case DELETE_PRODUCT:
+        return {
+          ...state,
+          userProducts: state.userProducts.filter((prod) => {
+            return prod.id !== action.prodId;
+          }),
+          availableProducts: state.availableProducts.filter((prod) => {
+            return prod.id !== action.prodId;
+          }),
+        };
+    }
 
     return state;
 };

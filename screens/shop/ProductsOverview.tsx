@@ -72,7 +72,7 @@ export const screenOptions = () => {
             title="cart"
             iconName="cart"
             onPress={() => {
-              navigation.navigate({key:'Cart'})
+              navigation.navigate("Cart")
             }}
           />
         </HeaderButtons>
