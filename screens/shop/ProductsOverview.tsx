@@ -8,6 +8,7 @@ import * as CartActions from "../../store/actions/cart-actions";
 import CHeaderButton from "../../components/UI/CHeaherButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import CButton from "../../components/shop/Button";
 
 
 const ProductsOverview: FC = (props: any) => {
@@ -23,14 +24,23 @@ const ProductsOverview: FC = (props: any) => {
           return (
             <ProductListItem
               item={itemData.item}
-              onViewDetail={() => {
-                props.navigation.navigate("Details", itemData.item);
-              }}
-              onAddToCart={() => {
-                dispatch(CartActions.addToCart(itemData.item));
-                props.navigation.navigate("Cart");
-              }}
-            />
+            >
+              <CButton
+                title="View Detail"
+                onPress={() => {
+                  props.navigation.navigate("Details", itemData.item);
+                }}
+                color={Color.Accent}
+              />
+              <CButton
+                title="Add to Cart"
+                onPress={() => {
+                  dispatch(CartActions.addToCart(itemData.item));
+                  props.navigation.navigate("Cart");
+                }}
+                color={Color.Primary}
+              />
+            </ProductListItem>
           );
         }}
       />
@@ -62,7 +72,7 @@ export const screenOptions = () => {
             title="cart"
             iconName="cart"
             onPress={() => {
-              navigation.navigate('Cart')
+              navigation.navigate({key:'Cart'})
             }}
           />
         </HeaderButtons>

@@ -2,11 +2,10 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity,TouchableNativeFeedback,Platform } from 'react-native';
 import Product from '../../models/product';
-import CButton from '../../components/shop/Button'
 import {Color} from "../../constants/Colors";
 
 
-export default function ProductListItem({item,onViewDetail,onAddToCart}:any) {
+export default function ProductListItem({item,onViewDetail,onAddToCart,children}:any) {
   const {container,image,imageContainer,actions,price,detail,title}=styles;
   let Touch:any= TouchableOpacity;
   if(Platform.OS==="android"){
@@ -29,8 +28,7 @@ export default function ProductListItem({item,onViewDetail,onAddToCart}:any) {
 
 
           <View style={actions} >
-           <CButton title='View Detail' onPress={onViewDetail} color={Color.Accent} />
-           {onAddToCart&&<CButton title='Add to Cart' onPress={onAddToCart} color={Color.Primary} />}
+          {children}
           </View>
             </>
       </View>
