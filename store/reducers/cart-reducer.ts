@@ -77,9 +77,19 @@ export default (state=initailState,action:any)=>{
             return initailState;
 
         case DELETE_PRODUCT: // will do it later
-            state.item.filter((prod:any) => { 
-            return prod.id !== action.prodId
-          })
+            if(!state.item[action.prodId]){
+                return state
+            }
+            const updatedItem={...state.item}
+            delete updatedItem[action.prodId]
+
+            const itemTotal=state.item[action.prodId].sum;
+            
+            return {
+              ...state,
+              item: updatedItem,
+              totalAmount: state.totalAmount - itemTotal,
+            };
 
 
     }
