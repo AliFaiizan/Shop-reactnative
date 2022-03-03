@@ -5,6 +5,9 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import CButton from '../../components/shop/Button'
 import { Color } from '../../constants/Colors'
 import * as CartAction from '../../store/actions/product-action' 
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import CHeaderButton from '../../components/UI/CHeaherButton'
+import { DrawerActions } from '@react-navigation/native'
 
 
 
@@ -43,7 +46,36 @@ const UserProductsScreen = ({ navigation }: any) => {
 };
 
 
-
+export const screenOptions=({navigation}:any) => {
+  return {
+    headerLeft: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CHeaderButton}>
+          <Item
+            title="Menu"
+            iconName="menu"
+            onPress={() => {
+              navigation.dispatch(DrawerActions.toggleDrawer());
+            }}
+          />
+        </HeaderButtons>
+      );
+    },
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CHeaderButton}>
+          <Item
+            title="add"
+            iconName="create"
+            onPress={() => {
+              navigation.navigate("EditProduct");
+            }}
+          />
+        </HeaderButtons>
+      );
+    },
+  };
+}
 
 export default UserProductsScreen
 

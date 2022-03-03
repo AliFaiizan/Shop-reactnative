@@ -17,8 +17,10 @@ import OrderScreen, {
 import ProductDetailScreen, {
   screenOptions as productDetailOptions,
 } from "../screens/shop/ProductDetailScreen";
-import UserProductsScreen from "../screens/user/UserProductsScreen";
-import EditProductScreen from '../screens/user/EditProduct'
+import UserProductsScreen, {screenOptions as UserProductsOptions} from "../screens/user/UserProductsScreen";
+import EditProductScreen, {
+  screenOptions as EditProductsOptions,
+} from "../screens/user/EditProduct";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -78,12 +80,12 @@ const AdminNavigator = () => {
       <orderStack.Screen
         name="Admin"
         component={UserProductsScreen}
-        options={OrderOptions} // later replace with own options
+        options={UserProductsOptions} 
       />
       <orderStack.Screen
         name="EditProduct"
         component={EditProductScreen}
-        options={OrderOptions} // later replace with own options
+        options={EditProductsOptions} 
       />
     </orderStack.Navigator>
   );
