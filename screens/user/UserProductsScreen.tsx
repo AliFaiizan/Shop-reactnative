@@ -8,33 +8,40 @@ import * as CartAction from '../../store/actions/product-action'
 
 
 
-const UserProductsScreen = () => {
-
+const UserProductsScreen = ({ navigation }: any) => {
   let dispatch = useDispatch();
 
-  const userProduct= useSelector((state:RootStateOrAny)=>state.products.userProducts)
+  const userProduct = useSelector(
+    (state: RootStateOrAny) => state.products.userProducts
+  );
 
   return (
-    <FlatList data={userProduct} renderItem={({item}) => { 
+    <FlatList
+      data={userProduct}
+      renderItem={({ item }) => {
         return (
-          <ProductListItem item={item} >
+          <ProductListItem item={item}>
             <CButton
               title="Edit"
-              onPress={() => {  }}
+              onPress={() => {
+                navigation.navigate("EditProduct", item);
+              }}
               color={Color.Accent}
             />
             <CButton
               title="Delete"
-              onPress={() => { 
-                  dispatch(CartAction.deleteProduct(item.id))
-                }}
+              onPress={() => {
+                dispatch(CartAction.deleteProduct(item.id));
+              }}
               color={Color.Primary}
             />
           </ProductListItem>
         );
-     }} /> 
-  )
-}
+      }}
+    />
+  );
+};
+
 
 
 

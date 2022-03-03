@@ -24,6 +24,7 @@ const ProductsOverview: FC = (props: any) => {
           return (
             <ProductListItem
               item={itemData.item}
+              onTouch={() => { props.navigation.navigate("Details",itemData.item) }}
             >
               <CButton
                 title="View Detail"
@@ -48,8 +49,8 @@ const ProductsOverview: FC = (props: any) => {
   );
 };
 
-export const screenOptions = () => {
-  const navigation = useNavigation();
+export const screenOptions = ({navigation}:any) => {
+  
   return {
     headerTitle: "All Products",
     headerLeft: () => {

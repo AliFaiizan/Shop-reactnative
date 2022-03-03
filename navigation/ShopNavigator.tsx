@@ -17,14 +17,15 @@ import OrderScreen, {
 import ProductDetailScreen, {
   screenOptions as productDetailOptions,
 } from "../screens/shop/ProductDetailScreen";
-
+import UserProductsScreen from "../screens/user/UserProductsScreen";
+import EditProductScreen from '../screens/user/EditProduct'
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import CustomDrawer from "../components/shop/CustomDrawer";
-import UserProductsScreen from "../screens/user/UserProductsScreen";
+
 
 
 //Stack Creation
@@ -77,6 +78,11 @@ const AdminNavigator = () => {
       <orderStack.Screen
         name="Admin"
         component={UserProductsScreen}
+        options={OrderOptions} // later replace with own options
+      />
+      <orderStack.Screen
+        name="EditProduct"
+        component={EditProductScreen}
         options={OrderOptions} // later replace with own options
       />
     </orderStack.Navigator>

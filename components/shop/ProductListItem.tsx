@@ -5,7 +5,7 @@ import Product from '../../models/product';
 import {Color} from "../../constants/Colors";
 
 
-export default function ProductListItem({item,onViewDetail,onAddToCart,children}:any) {
+export default function ProductListItem({item,onTouch,children}:any) {
   const {container,image,imageContainer,actions,price,detail,title}=styles;
   let Touch:any= TouchableOpacity;
   if(Platform.OS==="android"){
@@ -14,7 +14,7 @@ export default function ProductListItem({item,onViewDetail,onAddToCart,children}
 
   }
   return (
-      <Touch onPress={onViewDetail} activeOpacity={0.2} useForeground>
+      <Touch onPress={onTouch} activeOpacity={0.2} useForeground>
         <View style={[container,{backgroundColor:Color.ofwhite}]}>
           <>
           <View style={imageContainer}>
@@ -28,7 +28,7 @@ export default function ProductListItem({item,onViewDetail,onAddToCart,children}
 
 
           <View style={actions} >
-          {children}
+          {children} 
           </View>
             </>
       </View>
