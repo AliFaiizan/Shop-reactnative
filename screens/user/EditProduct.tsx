@@ -75,7 +75,21 @@ export const screenOptions=({route,navigation}:any) => {
               title="Save"
               iconName="save"
               onPress={() => {
-                  //work remaining 
+                //work remaining
+                navigation.navigate("Admin");
+              }}
+            />
+          </HeaderButtons>
+        );
+      }, // will remove later
+      headerLeft: () => {
+        return (
+          <HeaderButtons HeaderButtonComponent={CHeaderButton}>
+            <Item
+              title="Save"
+              iconName="save"
+              onPress={() => {
+                //work remaining
                 navigation.navigate("Admin");
               }}
             />
