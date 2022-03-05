@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useCallback} from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
 
@@ -11,7 +11,13 @@ const EditProduct = ({route}:any) => {
     const [price, setPrice] = useState(params ? params.price : 0);
     const [description, setDescription] = useState(params ? params.description : "");
 
-    
+    const submitHandler=useCallback(() => {
+      console.log('submitting')
+    },[]);
+
+    useEffect(() => { 
+      route.params.submit=submitHandler;
+     },[submitHandler])
 
 
   const {Uform,formControll,label,input} = styles;
@@ -66,6 +72,9 @@ const EditProduct = ({route}:any) => {
 
 export const screenOptions=({route,navigation}:any) => {
     //if route has any params than show different title
+
+    const submitFunction=navigation.submit; //assigned using useeffect
+
     return {
       headerTitle: route.params ? "Edit Product" : "Add Product",
       headerRight: () => {
@@ -76,26 +85,13 @@ export const screenOptions=({route,navigation}:any) => {
               iconName="save"
               onPress={() => {
                 //work remaining
+                submitFunction();
                 navigation.navigate("Admin");
               }}
             />
           </HeaderButtons>
         );
-      }, // will remove later
-      headerLeft: () => {
-        return (
-          <HeaderButtons HeaderButtonComponent={CHeaderButton}>
-            <Item
-              title="Save"
-              iconName="save"
-              onPress={() => {
-                //work remaining
-                navigation.navigate("Admin");
-              }}
-            />
-          </HeaderButtons>
-        );
-      },
+      }, 
     };
 }
 
