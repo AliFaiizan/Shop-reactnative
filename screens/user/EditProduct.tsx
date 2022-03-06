@@ -71,10 +71,9 @@ const EditProduct = ({route}:any) => {
 }
 
 export const screenOptions=({route,navigation}:any) => {
-    //if route has any params than show different title
+   
 
-    const submitFunction=navigation.submit; //assigned using useeffect
-
+    const submitFunction=navigation.submit; 
     return {
       headerTitle: route.params ? "Edit Product" : "Add Product",
       headerRight: () => {
