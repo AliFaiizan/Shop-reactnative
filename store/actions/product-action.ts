@@ -14,3 +14,12 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
         }
     }
 }
+
+export const updateProduct=(title:string,description:string,imageUrl:string,price:number) => { 
+    return {
+        type:UPDATE_PRODUCT,
+        productData:{
+            title,description,imageUrl,price
+        }
+    }
+ }
