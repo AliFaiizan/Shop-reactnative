@@ -1,6 +1,6 @@
 
 import "react-native-gesture-handler";
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {createStore, combineReducers} from 'redux';
 import productsReducer from './store/reducers/product-reducer';
 import cartReducer from './store/reducers/cart-reducer'; 
@@ -23,6 +23,10 @@ const rootReducer = combineReducers({
 const store=createStore(rootReducer);
 
 export default function App() {
+
+    const [fontloaded, setFontloaded] = useState(false);
+
+    //fetch fonts to use in styleSheet
     const fetchFont= ()=>{
         return Font.loadAsync({
             'open-sans':require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -30,13 +34,13 @@ export default function App() {
         })
     };
 
-    const [fontloaded,setFontloaded]=useState(false);
     if(!fontloaded){
         return <AppLoading startAsync={fetchFont}  onFinish={()=>{
             setFontloaded(true);
         }} onError={()=>{setFontloaded(false)}} />
 
     }
+    
 
   return (
 

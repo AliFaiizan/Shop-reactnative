@@ -7,7 +7,7 @@ import * as CartActions from "../../store/actions/cart-actions";
 
 import CHeaderButton from "../../components/UI/CHeaherButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { DrawerActions } from "@react-navigation/native";
 import CButton from "../../components/shop/Button";
 
 

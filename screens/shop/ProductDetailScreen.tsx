@@ -5,7 +5,9 @@ import { Color } from "../../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as CartAction from "../../store/actions/cart-actions";
 
-const ProductDetailScreen = ({route, navigation }: any) => {
+const ProductDetailScreen = ({route }: any) => {
+  
+  // used to dispatch action when add to cart button is presed
   
   let dispatch = useDispatch();
   let product = route.params;
