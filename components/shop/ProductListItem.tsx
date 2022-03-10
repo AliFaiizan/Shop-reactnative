@@ -11,7 +11,7 @@ export default function ProductListItem({item,onTouch,children}:any) {
   if(Platform.OS==="android"){
      Touch=TouchableNativeFeedback;
   }else{
-
+      Touch=TouchableOpacity;
   }
   return (
       <Touch onPress={onTouch} activeOpacity={0.2} useForeground>

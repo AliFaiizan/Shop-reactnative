@@ -33,6 +33,7 @@ export default function App() {
             'open-sans-bold':require('./assets/fonts/OpenSans-Bold.ttf')
         })
     };
+    //if font is loaded the load the app
 
     if(!fontloaded){
         return <AppLoading startAsync={fetchFont}  onFinish={()=>{
