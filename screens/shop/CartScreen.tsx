@@ -31,7 +31,7 @@ const CartScreen = (props: any) => {
 
   
   let dispatch = useDispatch();
-  const { screen, summary, summaryText, amount } = styles; //extractign styles
+  const { screen, summary, summaryText, amount } = styles; //extraction styles
   return (
     <View style={screen}>
       <View style={summary}>
