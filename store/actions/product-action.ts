@@ -20,11 +20,11 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
 
 //for updating existing product in store
 
-export const updateProduct=(title:string,description:string,imageUrl:string,price:number) => { 
+export const updateProduct=(id:string,title:string,description:string,imageUrl:string,price:number) => { 
     return {
         type:UPDATE_PRODUCT,
         productData:{
-            title,description,imageUrl,price
+            id,title,description,imageUrl,price
         }
     }
  }
