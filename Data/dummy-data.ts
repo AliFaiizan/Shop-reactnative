@@ -1,5 +1,16 @@
 import Product from "../models/product";
 
+import React,{useEffect} from "react";
+
+const fetchData=() => { 
+  /// fetching data login and setting Product Array: if nothing than pull data form local storage 
+  // if nothing than set it with static data.
+ }
+
+useEffect(() => { 
+  
+ })
+
 const PRODUCTS:Array<Product> = [
   {
     id:"p1",
