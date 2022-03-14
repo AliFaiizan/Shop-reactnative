@@ -23,8 +23,9 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
 export const updateProduct=(id:string,title:string,description:string,imageUrl:string,price:number) => { 
     return {
         type:UPDATE_PRODUCT,
+        id,
         productData:{
-            id,title,description,imageUrl,price
+            title,description,imageUrl,price
         }
     }
  }
