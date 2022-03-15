@@ -28,12 +28,14 @@ export default function(state= initialState,action:any){
       case CREATE_PRODUCT:
         const newProduct: Product = {
           id: "u1",
-          ownerid:'p1',
+          ownerid:'u1',
           title: action.productData.title,
           description: action.productData.description,
           imageUrl: action.productData.imageUrl,
           price: action.productData.price
         };
+        //concat new prduct to user product
+        //do same with available products
         return {
           ...state,
           userProducts: state.userProducts.filter((prod) => {
@@ -44,6 +46,9 @@ export default function(state= initialState,action:any){
           }),
         };
       case UPDATE_PRODUCT:
+
+      //find the product with id
+      //replace it contents// of find and remove than concat new data.
         return {
           ...state,
           userProducts: state.userProducts.filter((prod) => {
