@@ -38,12 +38,8 @@ export default function(state= initialState,action:any){
         //do same with available products
         return {
           ...state,
-          userProducts: state.userProducts.filter((prod) => {
-            return prod.id !== action.prodId;
-          }),
-          availableProducts: state.availableProducts.filter((prod) => {
-            return prod.id !== action.prodId;
-          }),
+          userProducts: state.userProducts.concat(newProduct),
+          availableProducts: state.availableProducts.concat(newProduct)
         };
       case UPDATE_PRODUCT:
 
