@@ -8,7 +8,7 @@ const fetchData=() => {
  }
 
 useEffect(() => { 
-  
+   
  })
 
 const PRODUCTS:Array<Product> = [
@@ -52,14 +52,14 @@ const PRODUCTS:Array<Product> = [
     description:"Awesome hardware, crappy keyboard and a hefty price. Buy now before a new one is released!",
     price:2299.99
   },
-  {
-    id:"p6",
-    ownerid:"u1",
-    title:"Pen & Paper",
-    imageUrl:"https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg",
-    description:"Can be used for role-playing (not the kind of role-playing you're thinking about...).",
-    price:5.49
-  }
+  // {
+  //   id:"p6",
+  //   ownerid:"u1",
+  //   title:"Pen & Paper",
+  //   imageUrl:"https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg",
+  //   description:"Can be used for role-playing (not the kind of role-playing you're thinking about...).",
+  //   price:5.49
+  // }
 ];
 
 export default PRODUCTS;
