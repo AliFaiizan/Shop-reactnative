@@ -2,16 +2,20 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, {useState,useEffect,useCallback} from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
+import { useDispatch } from 'react-redux';
+import * as ProductAction from '../../store/actions/product-action'
+
 
 const EditProduct = ({route}:any) => {
     const params=route.params
-    console.log(params)
+    
     const [title, setTitle] = useState(params?params.title:'');
     const [imageUrl, setImageUrl] = useState(params ? params.imageUrl : "");
     const [price, setPrice] = useState(params ? params.price : 0);
     const [description, setDescription] = useState(params ? params.description : "");
 
     const submitHandler=useCallback(() => {
+
       console.log('submitting')
     },[]);
 
@@ -19,6 +23,7 @@ const EditProduct = ({route}:any) => {
       route.params.submit=submitHandler;
      },[submitHandler])
 
+     useDispatch()
 
   const {Uform,formControll,label,input} = styles;
   return (
@@ -73,7 +78,7 @@ const EditProduct = ({route}:any) => {
 export const screenOptions=({route,navigation}:any) => {
    
 
-    const submitFunction=navigation.submit; 
+    const submitFunction=route.params.submit; 
     return {
       headerTitle: route.params ? "Edit Product" : "Add Product",
       headerRight: () => {

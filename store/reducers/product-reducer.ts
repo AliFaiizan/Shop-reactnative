@@ -27,7 +27,7 @@ export default function(state= initialState,action:any){
         };
       case CREATE_PRODUCT:
         const newProduct: Product = {
-          id: "u1",
+          id: new Date().toString(),
           ownerid:'u1',
           title: action.productData.title,
           description: action.productData.description,
@@ -42,17 +42,29 @@ export default function(state= initialState,action:any){
           availableProducts: state.availableProducts.concat(newProduct)
         };
       case UPDATE_PRODUCT:
-
+        const productIndex= state.userProducts.findIndex((prod) => { return prod.id===action.id })
       //find the product with id
+      const updatedProduct: Product = {
+        id: action.id,
+        ownerid:'u1',
+        title: action.productData.title,
+        description: action.productData.description,
+        imageUrl: action.productData.imageUrl,
+        price:action.productData.price
+      };
       //replace it contents// of find and remove than concat new data.
+      const updatedUserProducts=[...state.userProducts];
+      updatedUserProducts[productIndex]=updatedProduct;
+
+      const availableProductsIndex = state.availableProducts.findIndex((prod) => {
+        return prod.id === action.id;
+      });
+      const updatedAvailableProducts=[...state.availableProducts];
+      updatedAvailableProducts[availableProductsIndex]=updatedProduct;
         return {
           ...state,
-          userProducts: state.userProducts.filter((prod) => {
-            return prod.id !== action.prodId;
-          }),
-          availableProducts: state.availableProducts.filter((prod) => {
-            return prod.id !== action.prodId;
-          }),
+          userProducts:updatedUserProducts,
+          availableProducts: updatedAvailableProducts
         };
     }
 
