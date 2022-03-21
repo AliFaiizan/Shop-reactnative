@@ -2,12 +2,14 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, {useState,useEffect,useCallback} from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
-import { useDispatch } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import * as ProductAction from '../../store/actions/product-action'
 
 
 const EditProduct = ({route}:any) => {
     const params=route.params
+
+    const editedProduct=useSelector((state:RootStateOrAny) => { return state.products.userProducts.find((prod:any)=>{prod.id===params.id}) })
     
     const [title, setTitle] = useState(params?params.title:'');
     const [imageUrl, setImageUrl] = useState(params ? params.imageUrl : "");
