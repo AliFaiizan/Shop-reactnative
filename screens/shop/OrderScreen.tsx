@@ -22,7 +22,7 @@ const OrderScreen = () => {
     </>
   );
 };
-
+//screen options for order screen
 export const screenOptions = (navData: any) => {
   return {
     headerLeft: () => {
