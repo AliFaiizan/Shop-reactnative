@@ -10,7 +10,7 @@ const EditProduct = ({route}:any) => {
     const params=route.params
 
     const editedProduct=useSelector((state:RootStateOrAny) => { return state.products.userProducts.find((prod:any)=>{prod.id===params.id}) })
-    
+    console.log(editedProduct);
     const [title, setTitle] = useState(params?params.title:'');
     const [imageUrl, setImageUrl] = useState(params ? params.imageUrl : "");
     const [price, setPrice] = useState(params ? params.price : 0);
