@@ -18,6 +18,7 @@ const EditProduct = ({route}:any) => {
 
     const submitHandler=useCallback(() => {
 
+      ProductAction.CREATE_PRODUCT
       console.log('submitting')
     },[]);
 
