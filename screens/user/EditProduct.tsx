@@ -8,7 +8,7 @@ import * as ProductAction from '../../store/actions/product-action'
 
 const EditProduct = ({route}:any) => {
     const params=route.params
-
+    const dispatch=useDispatch();
     const editedProduct=useSelector((state:RootStateOrAny) => { return state.products.userProducts.find((prod:any)=>{prod.id===params.id}) })
     console.log(editedProduct);
     const [title, setTitle] = useState(params?params.title:'');
@@ -18,7 +18,9 @@ const EditProduct = ({route}:any) => {
 
     const submitHandler=useCallback(() => {
 
-      ProductAction.CREATE_PRODUCT
+      if(params){
+        dispatch(ProductAction.CREATE_PRODUCT(title,description,imageUrl,price))
+      }
       console.log('submitting')
     },[]);
 
@@ -26,8 +28,7 @@ const EditProduct = ({route}:any) => {
       route.params.submit=submitHandler;
      },[submitHandler])
 
-     useDispatch()
-
+     
   const {Uform,formControll,label,input} = styles;
   return (
     <ScrollView>
