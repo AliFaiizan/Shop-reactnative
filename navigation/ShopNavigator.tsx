@@ -120,7 +120,7 @@ const ShopDrawerNavigator = () => {
         }}
       />
       <shopDrawer.Screen
-        name="Admin"
+        name="My Products"
         component={AdminNavigator}
         options={{
           headerShown: false,
