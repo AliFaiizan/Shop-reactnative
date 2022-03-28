@@ -7,41 +7,44 @@ import * as ProductAction from '../../store/actions/product-action'
 
 
 const EditProduct = ({route,navigation}:any) => {
-    const params = route.params;
+    const productId = route.params.id;
     const dispatch = useDispatch();
     //console.log(params)
-    let editedProduct;
-      editedProduct = useSelector((state: RootStateOrAny) => {
-        if(params){
+    
+    const editedProduct = useSelector((state: RootStateOrAny) => {
+        
           return state.products.userProducts.find((prod: any) => {
-            return prod.id === params.id;
+            return prod.id === productId;
           });
-        }
+       
         
       });
   
     //console.log(editedProduct)
    
     
-    const [title, setTitle] = useState(params?params.title:'');
-    const [imageUrl, setImageUrl] = useState(params ? params.imageUrl : "");
-    const [price, setPrice] = useState(params ? params.price : 0);
-    const [description, setDescription] = useState(params ? params.description : "");
+    const [title, setTitle] = useState(editedProduct?editedProduct.title:'');
+    const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : "");
+    const [price, setPrice] = useState(editedProduct ? editedProduct.price : 0);
+    const [description, setDescription] = useState(editedProduct ? editedProduct.description : "");
     
    
-    const submitHandler=useCallback(() => {
-
-      if(params){
-        dispatch(ProductAction.createProduct(title,description,imageUrl,price))
+    const submitHandler=useCallback(()=>{
+      console.log(title)
+      if(editedProduct){
+        dispatch(
+          ProductAction.updateProduct(productId,title, description, imageUrl, price)
+        );
+      }else{
+        dispatch(ProductAction.createProduct(title, description, imageUrl, price));
       }
       console.log('submitting')
-    },[]);
+    },[dispatch,productId,title,description,imageUrl,price]);
 
     useEffect(() => { 
       navigation.setParams({submit:submitHandler})// this is setting params dynamically
      },[submitHandler])
 
-     
   const {Uform,formControll,label,input} = styles;
   return (
     <ScrollView>
@@ -52,6 +55,7 @@ const EditProduct = ({route,navigation}:any) => {
             style={input}
             value={title}
             onChangeText={(text) => {
+              
               setTitle(text);
             }}
           ></TextInput>
@@ -94,10 +98,9 @@ const EditProduct = ({route,navigation}:any) => {
 
 export const screenOptions=({route,navigation}:any) => {
     let submitFunction:Function
-    
-  if(route.params){
+
     submitFunction = route.params.submit; 
-  }
+  
  console.log(route.params);
     return {
       headerTitle: route.params ? "Edit Product" : "Add Product",

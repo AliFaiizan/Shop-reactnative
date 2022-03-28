@@ -27,7 +27,7 @@ const UserProductsScreen = ({ navigation }: any) => {
             <CButton
               title="Edit"
               onPress={() => {
-                navigation.navigate("EditProduct", item);
+                navigation.navigate("EditProduct", {id:item.id});
               }}
               color={Color.Accent}
             />
@@ -68,7 +68,7 @@ export const screenOptions=({navigation}:any) => {
             title="add"
             iconName="create"
             onPress={() => {
-              navigation.navigate("EditProduct");
+              navigation.navigate("EditProduct",{}); //params need to be assigned because we are getting them from edit product screen
             }}
           />
         </HeaderButtons>
