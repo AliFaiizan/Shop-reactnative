@@ -4,6 +4,7 @@ import CButton from './Button';
 import CartItem from './cartitem';
 import { Color } from '../../constants/Colors';
 import moment from 'moment';
+import Card from '../UI/Card';
 
 
 const OrderItem = ({item}:any) => {
@@ -15,7 +16,7 @@ const OrderItem = ({item}:any) => {
     const Mdate=moment().format('MMMM Do YYYY, hh:mm') //Moment date
 
   return (
-    <View style={orderItem}>
+    <Card style={orderItem}>
       <View style={summary}>
         <Text style={totalAmount}>${item.totalAmount.toFixed(2)}</Text>
         <Text style={date}>{Mdate}</Text>
@@ -31,7 +32,7 @@ const OrderItem = ({item}:any) => {
       {showDetail && <View style={styles.cartitem}>
             {item.item.map((item:any) => { return <CartItem key={item.productid} quantity={item.quantity} title={item.productTitle} amount={item.sum}  /> })}
           </View>}
-    </View>
+    </Card>
   );
 }
 
@@ -40,12 +41,6 @@ export default OrderItem
 const styles = StyleSheet.create({
   orderItem: {
     alignItems:'center',
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
     backgroundColor: Color.skin,
     margin: 20,
     padding: 10,

@@ -1,8 +1,9 @@
 
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity,TouchableNativeFeedback,Platform } from 'react-native';
-import Product from '../../models/product';
 import {Color} from "../../constants/Colors";
+import Card from '../UI/Card';
+
 
 
 export default function ProductListItem({item,onTouch,children}:any) {
@@ -15,7 +16,7 @@ export default function ProductListItem({item,onTouch,children}:any) {
   }
   return (
       <Touch onPress={onTouch} activeOpacity={0.2} useForeground>
-        <View style={[container,{backgroundColor:Color.ofwhite}]}>
+        <Card style={[container,{backgroundColor:Color.ofwhite}]}>
           <>
           <View style={imageContainer}>
             <Image style={image} source={{uri:item.imageUrl}} />
@@ -31,7 +32,7 @@ export default function ProductListItem({item,onTouch,children}:any) {
           {children} 
           </View>
             </>
-      </View>
+      </Card>
       </Touch>
 
   );
@@ -39,12 +40,6 @@ export default function ProductListItem({item,onTouch,children}:any) {
 
 const styles = StyleSheet.create({
   container: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
     height: 270,
     margin: 15,
     overflow: 'hidden'
