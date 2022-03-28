@@ -30,7 +30,7 @@ const EditProduct = ({route,navigation}:any) => {
     
    
     const submitHandler=useCallback(()=>{
-      console.log(title)
+      
       if(editedProduct){
         dispatch(
           ProductAction.updateProduct(productId,title, description, imageUrl, price)
@@ -38,6 +38,8 @@ const EditProduct = ({route,navigation}:any) => {
       }else{
         dispatch(ProductAction.createProduct(title, description, imageUrl, price));
       }
+      navigation.goBack(); //after completing go back
+
       console.log('submitting')
     },[dispatch,productId,title,description,imageUrl,price]);
 

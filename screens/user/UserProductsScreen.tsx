@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native'
+import { FlatList , Alert } from 'react-native'
 import React from 'react'
 import ProductListItem from '../../components/shop/ProductListItem'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,14 @@ import { DrawerActions } from '@react-navigation/native'
 
 const UserProductsScreen = ({ navigation }: any) => {
   let dispatch = useDispatch();
+
+  const deleteHandler= (id:string) => {
+    Alert.alert("Confirmation","Are you sure you want to delete this item?",[
+      {text:'NO',style:'default'},{text:"YES",style:'destructive',onPress:() => {
+        dispatch(CartAction.deleteProduct(id));
+        }}
+    ])
+  }
 
   const userProduct = useSelector(
     (state: RootStateOrAny) => state.products.userProducts
@@ -33,9 +41,7 @@ const UserProductsScreen = ({ navigation }: any) => {
             />
             <CButton
               title="Delete"
-              onPress={() => {
-                dispatch(CartAction.deleteProduct(item.id));
-              }}
+              onPress={deleteHandler.bind(this,item.id)}
               color={Color.Primary}
             />
           </ProductListItem>
