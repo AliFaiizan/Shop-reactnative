@@ -60,6 +60,12 @@ const EditProduct = ({route,navigation}:any) => {
               
               setTitle(text);
             }}
+            autoCapitalize='sentences'
+            keyboardType='default'
+            returnKeyType='next'
+            onEndEditing={()=>{
+              console.log('on exit editting')
+            }}
           ></TextInput>
         </View>
         <View style={formControll}>
@@ -81,6 +87,7 @@ const EditProduct = ({route,navigation}:any) => {
     
               setPrice(parseFloat(price)); //pricing need to be fixed
             }}
+            keyboardType='number-pad'
           ></TextInput>
         </View>
         <View style={formControll}>
