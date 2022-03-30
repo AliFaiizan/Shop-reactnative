@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View , Alert } from 'react-native'
 import React, {useState,useEffect,useCallback} from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
@@ -28,9 +28,13 @@ const EditProduct = ({route,navigation}:any) => {
     const [price, setPrice] = useState(editedProduct ? editedProduct.price : 0);
     const [description, setDescription] = useState(editedProduct ? editedProduct.description : "");
     
+    const [titleIsValid,setTitleIsValid]=useState(true);
    
     const submitHandler=useCallback(()=>{
-      
+      if(!titleIsValid){
+        Alert.alert('Failed to Submit','input you entered is invalid',[{text:'ok'}])
+        return
+      }
       if(editedProduct){
         dispatch(
           ProductAction.updateProduct(productId,title, description, imageUrl, price)
@@ -46,6 +50,16 @@ const EditProduct = ({route,navigation}:any) => {
     useEffect(() => { 
       navigation.setParams({submit:submitHandler})// this is setting params dynamically
      },[submitHandler])
+
+     const titleChangeHandler=(text:string) => {
+
+        if(text.trim().length===0){
+            setTitleIsValid(false)
+        }else{
+          setTitleIsValid(true)
+        }
+       setTitle(text)
+     }
 
   const {Uform,formControll,label,input} = styles;
   return (
@@ -67,6 +81,7 @@ const EditProduct = ({route,navigation}:any) => {
               console.log('on exit editting')
             }}
           ></TextInput>
+          {titleIsValid&&<Text>Please enter A valid Title</Text>}
         </View>
         <View style={formControll}>
           <Text style={label}>ImageUrl</Text>
