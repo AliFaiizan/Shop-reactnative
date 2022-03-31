@@ -1,15 +1,22 @@
 import { ScrollView, StyleSheet, Text, TextInput, View , Alert } from 'react-native'
-import React, {useState,useEffect,useCallback} from 'react'
+import React, {useState,useEffect,useCallback , useReducer} from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import * as ProductAction from '../../store/actions/product-action'
 
 
+const formReducer=(state:any,action:any) => {
+  if(action.type==='UPDATE'){
+
+  }
+}
+
 const EditProduct = ({route,navigation}:any) => {
     const productId = route.params.id;
     const dispatch = useDispatch();
     //console.log(params)
+    
     
     const editedProduct = useSelector((state: RootStateOrAny) => {
         
@@ -45,7 +52,7 @@ const EditProduct = ({route,navigation}:any) => {
       navigation.goBack(); //after completing go back
 
       console.log('submitting')
-    },[dispatch,productId,title,description,imageUrl,price]);
+    },[dispatch,productId,title,description,imageUrl,price,titleIsValid ]);
 
     useEffect(() => { 
       navigation.setParams({submit:submitHandler})// this is setting params dynamically
