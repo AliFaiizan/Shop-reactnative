@@ -15,9 +15,28 @@ type fState = {
 
 const formReducer=(state:any,action:any): fState =>  {
   if (action.type === "FORM_INPUT_UPDATE") {
-  }
+    const updatedValues={
+      ...state.inputValues,
+      [action.input]:action.value,
 
-  return state
+    }
+    const updatedValidities={
+      ...state.inputValidities,
+      [action.input]:action.isValid
+    }
+    let updatedFormIsValid=true;
+
+    for (const key in updatedValidities){
+      updatedFormIsValid=updatedFormIsValid&& updatedValidities[key];
+    }
+     return {
+       inputValues: updatedValues,
+       inputValidities:updatedValidities,
+       formIsValid:updatedFormIsValid
+     };
+  }
+  return state;
+ 
 }
 
 const EditProduct = ({route,navigation}:any) => {
