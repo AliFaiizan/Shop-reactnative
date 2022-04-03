@@ -44,9 +44,6 @@ const EditProduct = ({route,navigation}:any) => {
     const dispatch = useDispatch();
     //console.log(params)
 
- 
-
-    
     const editedProduct = useSelector((state: RootStateOrAny) => {
         
           return state.products.userProducts.find((prod: any) => {
@@ -111,26 +108,11 @@ const EditProduct = ({route,navigation}:any) => {
         }
        dispatchFormState({type: FORM_INPUT_UPDATE,val:text,isValid,inputId:inputIdentifier})
      }
-
-  const {Uform,formControll,label,input} = styles;
+ const {Uform} = styles;
+ 
   return (
     <ScrollView>
       <View style={Uform}>
-        <View style={formControll}>
-          <Text style={label}>Title</Text>
-          <TextInput
-            style={input}
-            value={formState.inputValues.title}
-            onChangeText={textChangeHandler.bind(this,'title')}
-            autoCapitalize='sentences'
-            keyboardType='default'
-            returnKeyType='next'
-            onEndEditing={()=>{
-              console.log('on exit editting')
-            }}
-          ></TextInput>
-          {formState.formIsValid&&<Text>Please enter A valid Title</Text>}
-        </View>
         <View style={formControll}>
           <Text style={label}>ImageUrl</Text>
           <TextInput
@@ -192,19 +174,6 @@ export default EditProduct;
 const styles = StyleSheet.create({
   Uform: {
     margin: 20,
-  },
-  formControll: {
-    width: "100%",
-  },
-  label: {
-    fontFamily: "open-sans-bold",
-    marginVertical: 8,
-  },
-  input: {
-      paddingHorizontal:2,
-      paddingVertical:5,
-      borderBottomColor:'#ccc',
-      borderBottomWidth:1
   },
   action:{
 
