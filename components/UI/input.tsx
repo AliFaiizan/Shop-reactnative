@@ -1,7 +1,13 @@
 import { StyleSheet, Text, TextInput, View  } from 'react-native'
-import React from 'react'
+import React from 'react';
+
+const inputReducer=(state,action)=>{};
 
 const input = (props:any) => {
+
+  const textChangeHandler=(text:any)=>{
+
+  }
 
      const { formControll, label, input } = styles;
   return (

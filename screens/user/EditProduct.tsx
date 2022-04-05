@@ -4,6 +4,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CHeaderButton from '../../components/UI/CHeaherButton';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import * as ProductAction from '../../store/actions/product-action'
+import Cinput from '../../components/UI/input';
+
 
 const FORM_INPUT_UPDATE='FORM_INPUT_UPDATE';
 
@@ -113,31 +115,36 @@ const EditProduct = ({route,navigation}:any) => {
   return (
     <ScrollView>
       <View style={Uform}>
-        <View style={formControll}>
-          <Text style={label}>ImageUrl</Text>
-          <TextInput
-            style={input}
-            value={formState.inputValues.imageUrl}
-            onChangeText={textChangeHandler.bind(this,'imageUrl')}
-          ></TextInput>
-        </View>
-        <View style={formControll}>
-          <Text style={label}>PRICE</Text>
-          <TextInput
-            style={input}
-            value={formState.inputValues.price.toString()}
-            onChangeText={textChangeHandler.bind(this,'price')}
-            keyboardType='number-pad'
-          ></TextInput>
-        </View>
-        <View style={formControll}>
-          <Text style={label}>DESCRIPTION</Text>
-          <TextInput
-            style={input}
-            value={formState.inputValues.description}
-            onChangeText={textChangeHandler.bind(this,'description')}
-          ></TextInput>
-        </View>
+        <Cinput
+          label="Title"
+          errorText="Please Enter Valid Title"
+          keyboardType="default"
+          autoCapitalize="sentences"
+          autoCorrect
+          returnKeyType="next"
+        />
+        <Cinput
+          label="ImageUrl"
+          errorText="Please Enter Valid ImageURL"
+          keyboardType="default"
+          returnKeyType="next"
+        />
+        <Cinput
+          label="Price"
+          errorText="Please Enter Valid Price"
+          keyboardType="decimal-pad"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+        />
+        <Cinput
+          label="Description"
+          errorText="Please Enter Valid Description"
+          keyboardType="default"
+          autoCapitalize="sentences"
+          autoCorrect
+         multiline
+         numberOfLines={3}
+        />
       </View>
     </ScrollView>
   );
