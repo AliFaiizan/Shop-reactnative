@@ -142,8 +142,8 @@ const EditProduct = ({route,navigation}:any) => {
           keyboardType="default"
           autoCapitalize="sentences"
           autoCorrect
-         multiline
-         numberOfLines={3}
+          multiline
+          numberOfLines={3}
         />
       </View>
     </ScrollView>
