@@ -1,117 +1,136 @@
-import { ScrollView, StyleSheet, Text, TextInput, View , Alert } from 'react-native'
-import React, {useEffect,useCallback , useReducer} from 'react'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CHeaderButton from '../../components/UI/CHeaherButton';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import * as ProductAction from '../../store/actions/product-action'
-import Cinput from '../../components/UI/input';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Alert,
+} from "react-native";
+import React, { useEffect, useCallback, useReducer } from "react";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CHeaderButton from "../../components/UI/CHeaherButton";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import * as ProductAction from "../../store/actions/product-action";
+import Cinput from "../../components/UI/input";
 
-
-const FORM_INPUT_UPDATE='FORM_INPUT_UPDATE';
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 type fState = {
-  inputValues: {title:string,imageUrl:string,price:string,description:string};
-  inputValidities:{title:boolean,imageUrl:boolean,price:boolean,description:boolean};
+  inputValues: {
+    title: string;
+    imageUrl: string;
+    price: string;
+    description: string;
+  };
+  inputValidities: {
+    title: boolean;
+    imageUrl: boolean;
+    price: boolean;
+    description: boolean;
+  };
   formIsValid: boolean;
 };
 
-const formReducer=(state:any,action:any): fState =>  {
+const formReducer = (state: any, action: any): fState => {
   if (action.type === "FORM_INPUT_UPDATE") {
-    const updatedValues={
+    const updatedValues = {
       ...state.inputValues,
-      [action.input]:action.value,
-
-    }
-    const updatedValidities={
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
       ...state.inputValidities,
-      [action.input]:action.isValid
-    }
-    let updatedFormIsValid=true;
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
 
-    for (const key in updatedValidities){
-      updatedFormIsValid=updatedFormIsValid&& updatedValidities[key];
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
-     return {
-       inputValues: updatedValues,
-       inputValidities:updatedValidities,
-       formIsValid:updatedFormIsValid
-     };
+    return {
+      inputValues: updatedValues,
+      inputValidities: updatedValidities,
+      formIsValid: updatedFormIsValid,
+    };
   }
   return state;
- 
-}
+};
 
-const EditProduct = ({route,navigation}:any) => {
-    const productId = route.params.id;
-    const dispatch = useDispatch();
-    //console.log(params)
+const EditProduct = ({ route, navigation }: any) => {
+  const productId = route.params.id;
+  const dispatch = useDispatch();
+  //console.log(params)
 
-    const editedProduct = useSelector((state: RootStateOrAny) => {
-        
-          return state.products.userProducts.find((prod: any) => {
-            return prod.id === productId;
-          });
-       
-        
-      });
-  
-    //console.log(editedProduct)
-    
+  const editedProduct = useSelector((state: RootStateOrAny) => {
+    return state.products.userProducts.find((prod: any) => {
+      return prod.id === productId;
+    });
+  });
 
-     const [formState,dispatchFormState] = useReducer(formReducer,
-       {
-        inputValues: {
-           title: editedProduct ? editedProduct.title : "",
-           imageUrl: editedProduct ? editedProduct.imageUrl : "",
-           price: editedProduct ? editedProduct.price : "",
-           description: editedProduct ? editedProduct.description : "",
-         },
-       inputValidities: {
-         title: editedProduct ? true : false,
-         imageUrl: editedProduct ? true : false,
-         price: editedProduct ? true : false,
-         description: editedProduct ? true : false,
-       },
-       formIsValid: editedProduct?true:false,
-      })
-   
-    
-   
-   
-    const submitHandler=useCallback(()=>{
+  //console.log(editedProduct)
 
-      const {title,description,imageUrl,price}=formState.inputValues;
-      if(!formState.formIsValid){
-        Alert.alert('Failed to Submit','input you entered is invalid',[{text:'ok'}])
-        return
-      }
-      if(editedProduct){
-        dispatch(
-          ProductAction.updateProduct(productId,title, description, imageUrl, Number(price))
-        );
-      }else{
-        dispatch(ProductAction.createProduct(title, description, imageUrl, Number(price)));
-      }
-      navigation.goBack(); //after completing go back
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      title: editedProduct ? editedProduct.title : "",
+      imageUrl: editedProduct ? editedProduct.imageUrl : "",
+      price: editedProduct ? editedProduct.price : "",
+      description: editedProduct ? editedProduct.description : "",
+    },
+    inputValidities: {
+      title: editedProduct ? true : false,
+      imageUrl: editedProduct ? true : false,
+      price: editedProduct ? true : false,
+      description: editedProduct ? true : false,
+    },
+    formIsValid: editedProduct ? true : false,
+  });
 
-      console.log('submitting')
-    },[dispatch,productId,formState]);
+  const submitHandler = useCallback(() => {
+    const { title, description, imageUrl, price } = formState.inputValues;
+    if (!formState.formIsValid) {
+      Alert.alert("Failed to Submit", "input you entered is invalid", [
+        { text: "ok" },
+      ]);
+      return;
+    }
+    if (editedProduct) {
+      dispatch(
+        ProductAction.updateProduct(
+          productId,
+          title,
+          description,
+          imageUrl,
+          Number(price)
+        )
+      );
+    } else {
+      dispatch(
+        ProductAction.createProduct(title, description, imageUrl, Number(price))
+      );
+    }
+    navigation.goBack(); //after completing go back
 
-    useEffect(() => { 
-      navigation.setParams({submit:submitHandler})// this is setting params dynamically
-     },[submitHandler])
+    console.log("submitting");
+  }, [dispatch, productId, formState]);
 
-     const textChangeHandler=(inputIdentifier:string,text:string,) => {
-      let isValid=false;
-        if(text.trim().length>=0){
-           isValid=true;
-        }else{
-         
-        }
-       dispatchFormState({type: FORM_INPUT_UPDATE,val:text,isValid,inputId:inputIdentifier})
-     }
- const {Uform} = styles;
- 
+  useEffect(() => {
+    navigation.setParams({ submit: submitHandler }); // this is setting params dynamically
+  }, [submitHandler]);
+
+  const textChangeHandler = useCallback((
+    inputIdentifier: string,
+    inputValue: any,
+    inputValidity: boolean
+  ) => {
+    dispatchFormState({
+      type: FORM_INPUT_UPDATE,
+      val: inputValue,
+      isValid: inputValidity,
+      inputId: inputIdentifier,
+    });
+  },[dispatchFormState])
+
+  const { Uform } = styles;
+
   return (
     <ScrollView>
       <View style={Uform}>
@@ -122,12 +141,20 @@ const EditProduct = ({route,navigation}:any) => {
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
+          onInputChange={textChangeHandler}
+          initialValue={editedProduct ? editedProduct.title : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
         <Cinput
           label="ImageUrl"
           errorText="Please Enter Valid ImageURL"
           keyboardType="default"
           returnKeyType="next"
+          onInputChange={textChangeHandler}
+          initialValue={editedProduct ? editedProduct.imageUrl : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
         <Cinput
           label="Price"
@@ -135,6 +162,9 @@ const EditProduct = ({route,navigation}:any) => {
           keyboardType="decimal-pad"
           autoCapitalize="sentences"
           returnKeyType="next"
+          onInputChange={textChangeHandler}
+          required
+          min={0.1}
         />
         <Cinput
           label="Description"
@@ -144,37 +174,41 @@ const EditProduct = ({route,navigation}:any) => {
           autoCorrect
           multiline
           numberOfLines={3}
+          initialValue={editedProduct ? editedProduct.description : ""}
+          initiallyValid={!!editedProduct}
+          required
+          minLength={5}
         />
       </View>
     </ScrollView>
   );
-}
+};
 
-export const screenOptions=({route,navigation}:any) => {
-    let submitFunction:Function
+export const screenOptions = ({ route, navigation }: any) => {
+  let submitFunction: Function;
 
-    submitFunction = route.params.submit; 
-  
- console.log(route.params);
-    return {
-      headerTitle: route.params ? "Edit Product" : "Add Product",
-      headerRight: () => {
-        return (
-          <HeaderButtons HeaderButtonComponent={CHeaderButton}>
-            <Item
-              title="Save"
-              iconName="save"
-              onPress={() => {
-                //work remaining
-                submitFunction();
-                navigation.navigate("Admin");
-              }}
-            />
-          </HeaderButtons>
-        );
-      }, 
-    };
-}
+  submitFunction = route.params.submit;
+
+  console.log(route.params);
+  return {
+    headerTitle: route.params ? "Edit Product" : "Add Product",
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CHeaderButton}>
+          <Item
+            title="Save"
+            iconName="save"
+            onPress={() => {
+              //work remaining
+              submitFunction();
+              navigation.navigate("Admin");
+            }}
+          />
+        </HeaderButtons>
+      );
+    },
+  };
+};
 
 export default EditProduct;
 
@@ -182,7 +216,5 @@ const styles = StyleSheet.create({
   Uform: {
     margin: 20,
   },
-  action:{
-
-  }
+  action: {},
 });

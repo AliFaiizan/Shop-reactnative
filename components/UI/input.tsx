@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useReducer } from "react";
+import React, { useReducer , useEffect } from "react";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
 const INPUT_BLUR = 'INPUT_BLUR';
@@ -31,6 +31,16 @@ const input = (props: any) => {
     isValid: props.initiallyValid,
     touched: false,
   });
+
+  const {onInputChange}=props;
+
+  useEffect(() => {
+    if(inputState.touched){
+      onInputChange(inputState.value,inputState.isValid)
+    }
+  
+  }, [inputState,onInputChange])
+  
 
   const textChangeHandler = (text: any) => {
     const emailRegex=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -64,14 +74,14 @@ const input = (props: any) => {
       <TextInput
         {...props}
         style={input}
-        value={formState.inputValues.title}
+        value={inputState.value}
         onChangeText={textChangeHandler}
         onEndEditing={() => {
           console.log("on exit editting");
         }}
         onBlur={lostFocusHandler}
       ></TextInput>
-      {formState.formIsValid && <Text>Please enter A valid Title</Text>}
+      {inputState.IsValid && <Text>Please enter A valid Title</Text>}
     </View>
   );
 };
