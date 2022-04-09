@@ -135,7 +135,7 @@ const EditProduct = ({ route, navigation }: any) => {
     <ScrollView>
       <View style={Uform}>
         <Cinput
-          id='title'
+          id="title"
           label="Title"
           errorText="Please Enter Valid Title"
           keyboardType="default"
@@ -148,7 +148,7 @@ const EditProduct = ({ route, navigation }: any) => {
           required
         />
         <Cinput
-          id='imageUrl'
+          id="imageUrl"
           label="ImageUrl"
           errorText="Please Enter Valid ImageURL"
           keyboardType="default"
@@ -159,22 +159,24 @@ const EditProduct = ({ route, navigation }: any) => {
           required
         />
         <Cinput
-          id='price'
+          id="price"
           label="Price"
           errorText="Please Enter Valid Price"
           keyboardType="decimal-pad"
           autoCapitalize="sentences"
           returnKeyType="next"
           onInputChange={textChangeHandler}
+          initialValue={editedProduct ? editedProduct.price.toString() : ""}
           required
           min={0.1}
         />
         <Cinput
-          id='description'
+          id="description"
           label="Description"
           errorText="Please Enter Valid Description"
           keyboardType="default"
           autoCapitalize="sentences"
+          onInputChange={textChangeHandler}
           autoCorrect
           multiline
           numberOfLines={3}
@@ -193,7 +195,7 @@ export const screenOptions = ({ route, navigation }: any) => {
 
   submitFunction = route.params.submit;
 
-  console.log(route.params);
+
   return {
     headerTitle: route.params ? "Edit Product" : "Add Product",
     headerRight: () => {
@@ -220,5 +222,5 @@ const styles = StyleSheet.create({
   Uform: {
     margin: 20,
   },
-  action: {},
+  
 });

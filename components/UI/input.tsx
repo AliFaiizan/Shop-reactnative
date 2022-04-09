@@ -27,7 +27,7 @@ const input = (props: any) => {
 
 
   const [inputState, dispatchInput] = useReducer(inputReducer, {
-    value: props.initialValue ? props.initilaValue : "",
+    value: props.initialValue ? props.initialValue : "",
     isValid: props.initiallyValid,
     touched: false,
   });
@@ -35,6 +35,7 @@ const input = (props: any) => {
   const {onInputChange, id}=props;
 
   useEffect(() => {
+    console.log(typeof(onInputChange))
     if(inputState.touched){
       onInputChange(inputState.value,inputState.isValid,id)
     }
@@ -66,11 +67,11 @@ const input = (props: any) => {
   const lostFocusHandler=() => { 
     dispatchInput({type:INPUT_BLUR});
    }
-
-  const { formControll, label, input } = styles;
+   
+  const { formControll, lbl, input , errorContainer,errorText } = styles;
   return (
     <View style={formControll}>
-      <Text style={label}>{label}</Text>
+      <Text style={lbl}>{props.label}</Text>
       <TextInput
         {...props}
         style={input}
@@ -81,7 +82,11 @@ const input = (props: any) => {
         }}
         onBlur={lostFocusHandler}
       ></TextInput>
-      {inputState.IsValid && <Text>Please enter A valid Title</Text>}
+      {!inputState.isValid && inputState.touched && (
+        <View style={errorContainer}>
+          <Text style={errorText}>Please enter A valid {props.label}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
   formControll: {
     width: "100%",
   },
-  label: {
+  lbl: {
     fontFamily: "open-sans-bold",
     marginVertical: 8,
   },
@@ -102,4 +107,12 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
   },
+  errorContainer:{
+    marginVertical:5,
+  },
+  errorText:{
+    fontFamily:'open-sans',
+    color:'red',
+    fontSize:13
+  }
 });
