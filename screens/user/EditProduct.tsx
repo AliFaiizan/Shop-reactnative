@@ -109,7 +109,7 @@ const EditProduct = ({ route, navigation }: any) => {
     }
     navigation.goBack(); //after completing go back
 
-    console.log("submitting");
+    console.log("submitted");
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
@@ -135,6 +135,7 @@ const EditProduct = ({ route, navigation }: any) => {
     <ScrollView>
       <View style={Uform}>
         <Cinput
+          id='title'
           label="Title"
           errorText="Please Enter Valid Title"
           keyboardType="default"
@@ -147,6 +148,7 @@ const EditProduct = ({ route, navigation }: any) => {
           required
         />
         <Cinput
+          id='imageUrl'
           label="ImageUrl"
           errorText="Please Enter Valid ImageURL"
           keyboardType="default"
@@ -157,6 +159,7 @@ const EditProduct = ({ route, navigation }: any) => {
           required
         />
         <Cinput
+          id='price'
           label="Price"
           errorText="Please Enter Valid Price"
           keyboardType="decimal-pad"
@@ -167,6 +170,7 @@ const EditProduct = ({ route, navigation }: any) => {
           min={0.1}
         />
         <Cinput
+          id='description'
           label="Description"
           errorText="Please Enter Valid Description"
           keyboardType="default"
