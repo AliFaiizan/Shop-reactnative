@@ -27,7 +27,7 @@ export default function(state= initialState,action:any){
         };
       case CREATE_PRODUCT:
         const newProduct: Product = {
-          id: new Date().toString(),
+          id: action.productData.id,
           ownerid:'u1',
           title: action.productData.title,
           description: action.productData.description,

@@ -11,14 +11,26 @@ export const deleteProduct=(prodId:string) => {
 //action for creating item in store
 export const createProduct=(title:string,description:string,imageUrl:string,price:number)=>{
 
-    return (dispatch:Function )=>{
+    return async (dispatch:Function )=>{
 
       //any async code you want
-    
+       const responce = await fetch('https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json',{
+            method:'POST',
+            headers:{
+                'Content-type':'application.json'
+            },
+            body:JSON.stringify({
+                title,description,imageUrl,price
+            })
+        })
+
+      const resData= await responce.json();
+
+      
       dispatch ({
         type:CREATE_PRODUCT,
         productData:{
-            title,description,imageUrl,price,
+            id:resData.name,title,description,imageUrl,price,
         }
     })
     }
