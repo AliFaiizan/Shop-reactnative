@@ -1,9 +1,10 @@
 import { View, FlatList } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import ProductListItem from "../../components/shop/ProductListItem";
 import { Color } from "../../constants/Colors";
 import * as CartActions from "../../store/actions/cart-actions";
+import * as ProductActions from "../../store/actions/product-action";
 
 import CHeaderButton from "../../components/UI/CHeaherButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,6 +17,11 @@ const ProductsOverview: FC = (props: any) => {
   const products = useSelector(
     (state: RootStateOrAny) => state.products.availableProducts
   );
+
+  useEffect(() => { 
+    dispatch(ProductActions.fetchProducts)
+   },[dispatch])
+   
   return (
     <View style={{ backgroundColor: Color.skin }}>
       <FlatList
