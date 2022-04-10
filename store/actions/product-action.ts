@@ -10,12 +10,20 @@ export const deleteProduct=(prodId:string) => {
 
 //action for creating item in store
 export const createProduct=(title:string,description:string,imageUrl:string,price:number)=>{
-    return {
+
+    return (dispatch:Function )=>{
+
+      //any async code you want
+    
+      dispatch ({
         type:CREATE_PRODUCT,
         productData:{
             title,description,imageUrl,price,
         }
+    })
     }
+
+    
 }
 
 //for updating existing product in store

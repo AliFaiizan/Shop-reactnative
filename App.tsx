@@ -1,7 +1,8 @@
 
 import "react-native-gesture-handler";
 import React, {useState,useEffect} from 'react';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import ReduxThunk from 'redux-thunk'
 import productsReducer from './store/reducers/product-reducer';
 import cartReducer from './store/reducers/cart-reducer'; 
 import orderReducer from "./store/reducers/order-reducer";
@@ -20,7 +21,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
 });
 
-const store=createStore(rootReducer);
+const store=createStore(rootReducer,applyMiddleware(ReduxThunk));
 
 export default function App() {
 
