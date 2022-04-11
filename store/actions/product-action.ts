@@ -39,7 +39,7 @@ export const fetchProducts=() => {
 export const createProduct=(title:string,description:string,imageUrl:string,price:number)=>{
 
     return async (dispatch:Function )=>{
-
+        console.log({title,description,imageUrl,price})
       //any async code you want
        const responce = await fetch('https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json',{
             method:'POST',
@@ -68,6 +68,7 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
 //for updating existing product in store
 
 export const updateProduct=(id:string,title:string,description:string,imageUrl:string,price:number) => { 
+    
     return {
         type:UPDATE_PRODUCT,
         id,

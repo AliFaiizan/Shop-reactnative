@@ -1,5 +1,5 @@
-import { View, FlatList } from "react-native";
-import React, { FC, useEffect } from "react";
+import { View, FlatList, ActivityIndicator , Text} from "react-native";
+import React, { FC, useEffect , useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import ProductListItem from "../../components/shop/ProductListItem";
 import { Color } from "../../constants/Colors";
@@ -18,10 +18,34 @@ const ProductsOverview: FC = (props: any) => {
     (state: RootStateOrAny) => state.products.availableProducts
   );
 
+  const [isLoading,setIsLoading]= useState(false);
+
   useEffect(() => { 
-    dispatch(ProductActions.fetchProducts)
+
+    const loadProducts=async() => {
+      setIsLoading(true);
+      await dispatch(ProductActions.fetchProducts);
+      setIsLoading(false)
+    }
+    loadProducts()
    },[dispatch])
    
+
+   if(isLoading){
+     return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+       <ActivityIndicator size='large' color={Color.Primary} />
+     </View>
+   }
+   if (isLoading && products.length===0) {
+     return (
+       <View
+         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+       >
+         <Text>There are no products</Text>
+         <CButton title='Try Again' onPress={() => {  }} />
+       </View>
+     );
+   }
   return (
     <View style={{ backgroundColor: Color.skin }}>
       <FlatList

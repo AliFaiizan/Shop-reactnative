@@ -52,6 +52,7 @@ export default function(state= initialState,action:any){
         imageUrl: action.productData.imageUrl,
         price:action.productData.price
       };
+      console.log(updatedProduct)
       //replace it contents// of find and remove than concat new data.
       const updatedUserProducts=[...state.userProducts];
       updatedUserProducts[productIndex]=updatedProduct;

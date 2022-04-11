@@ -81,11 +81,13 @@ const EditProduct = ({ route, navigation }: any) => {
       price: editedProduct ? true : false,
       description: editedProduct ? true : false,
     },
-    formIsValid: editedProduct ? true : false,
+    formIsValid: true,
   });
+   const { title, description, imageUrl, price } = formState.inputValues;
 
   const submitHandler = useCallback(() => {
     const { title, description, imageUrl, price } = formState.inputValues;
+    console.log({title,description,imageUrl,price})
     if (!formState.formIsValid) {
       Alert.alert("Failed to Submit", "input you entered is invalid", [
         { text: "ok" },
@@ -110,22 +112,25 @@ const EditProduct = ({ route, navigation }: any) => {
     navigation.goBack(); //after completing go back
 
     console.log("submitted");
-  }, [dispatch, productId, formState]);
-
+  }, [dispatch, productId,title,description,imageUrl,price]);
+   
   useEffect(() => {
-    navigation.setParams({ submit: submitHandler }); // this is setting params dynamically
+    navigation.setParams({ submit: submitHandler });
+     // this is setting params dynamically
+    
   }, [submitHandler]);
 
   const textChangeHandler = useCallback((
-    inputIdentifier: string,
     inputValue: any,
-    inputValidity: boolean
+    inputValidity: boolean,
+    inputIdentifier: string,
   ) => {
+    console.log({inputValue,inputValidity,ths:formState.formIsValid})
     dispatchFormState({
       type: FORM_INPUT_UPDATE,
-      val: inputValue,
+      value: inputValue,
       isValid: inputValidity,
-      inputId: inputIdentifier,
+      input: inputIdentifier,
     });
   },[dispatchFormState])
 
@@ -191,9 +196,7 @@ const EditProduct = ({ route, navigation }: any) => {
 };
 
 export const screenOptions = ({ route, navigation }: any) => {
-  let submitFunction: Function;
-
-  submitFunction = route.params.submit;
+ 
 
 
   return {
@@ -206,7 +209,7 @@ export const screenOptions = ({ route, navigation }: any) => {
             iconName="save"
             onPress={() => {
               //work remaining
-              submitFunction();
+              route.params.submit();
               navigation.navigate("Admin");
             }}
           />
