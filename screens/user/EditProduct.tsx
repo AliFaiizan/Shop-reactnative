@@ -44,7 +44,9 @@ const formReducer = (state: any, action: any): fState => {
     let updatedFormIsValid = true;
 
     for (const key in updatedValidities) {
+     
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+       
     }
     return {
       inputValues: updatedValues,
@@ -81,13 +83,12 @@ const EditProduct = ({ route, navigation }: any) => {
       price: editedProduct ? true : false,
       description: editedProduct ? true : false,
     },
-    formIsValid: true,
+    formIsValid: editedProduct ? true : false,
   });
-   const { title, description, imageUrl, price } = formState.inputValues;
 
   const submitHandler = useCallback(() => {
     const { title, description, imageUrl, price } = formState.inputValues;
-    console.log({title,description,imageUrl,price})
+      
     if (!formState.formIsValid) {
       Alert.alert("Failed to Submit", "input you entered is invalid", [
         { text: "ok" },
@@ -112,7 +113,7 @@ const EditProduct = ({ route, navigation }: any) => {
     navigation.goBack(); //after completing go back
 
     console.log("submitted");
-  }, [dispatch, productId,title,description,imageUrl,price]);
+  }, [dispatch, productId,formState]);
    
   useEffect(() => {
     navigation.setParams({ submit: submitHandler });
@@ -125,7 +126,7 @@ const EditProduct = ({ route, navigation }: any) => {
     inputValidity: boolean,
     inputIdentifier: string,
   ) => {
-    console.log({inputValue,inputValidity,ths:formState.formIsValid})
+    
     dispatchFormState({
       type: FORM_INPUT_UPDATE,
       value: inputValue,
