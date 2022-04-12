@@ -24,7 +24,7 @@ const ProductsOverview: FC = (props: any) => {
 
     const loadProducts=async() => {
       setIsLoading(true);
-      await dispatch(ProductActions.fetchProducts);
+      await dispatch(ProductActions.fetchProducts())
       setIsLoading(false)
     }
     loadProducts()

@@ -16,7 +16,7 @@ export const fetchProducts=() => {
     const responce = await fetch('https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json')
 
     const resData= await responce.json();
-
+        console.log(resData)
     const loadedProducts=[];
     for( const key in resData){
 
