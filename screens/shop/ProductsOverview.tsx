@@ -21,6 +21,7 @@ const ProductsOverview: FC = (props: any) => {
   );
 
    const loadProducts = useCallback(async () => {
+     setError(false)
      setIsLoading(true);
      try {
        await dispatch(ProductActions.fetchProducts());
@@ -32,7 +33,17 @@ const ProductsOverview: FC = (props: any) => {
      setIsLoading(false);
    },[dispatch,setIsLoading])
  
+   //thsi will be attached after componetn is loaded first time thats why we need another use effect
+   useEffect(() => {
+     const willFocusSub=props.navigation.addListener("willFocus", () => {
+       loadProducts();
+     });
+     return () => {
+       willFocusSub.remove();
+     }
+   }, [loadProducts]);
 
+   // this will be called when module reloades
   useEffect(() => { 
     loadProducts()
    },[dispatch])
