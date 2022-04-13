@@ -1,5 +1,5 @@
 import { View, FlatList, ActivityIndicator , Text} from "react-native";
-import React, { FC, useEffect , useState } from "react";
+import React, { FC, useEffect , useState , useCallback } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import ProductListItem from "../../components/shop/ProductListItem";
 import { Color } from "../../constants/Colors";
@@ -14,22 +14,39 @@ import CButton from "../../components/shop/Button";
 
 const ProductsOverview: FC = (props: any) => {
   let dispatch = useDispatch();
+   const [isLoading, setIsLoading] = useState(false);
+  const [error,setError]=useState(false)
   const products = useSelector(
     (state: RootStateOrAny) => state.products.availableProducts
   );
 
-  const [isLoading,setIsLoading]= useState(false);
+   const loadProducts = useCallback(async () => {
+     setIsLoading(true);
+     try {
+       await dispatch(ProductActions.fetchProducts());
+     } catch {
+       () => {
+         setError(true);
+       };
+     }
+     setIsLoading(false);
+   },[dispatch,setIsLoading])
+ 
 
   useEffect(() => { 
-
-    const loadProducts=async() => {
-      setIsLoading(true);
-      await dispatch(ProductActions.fetchProducts())
-      setIsLoading(false)
-    }
     loadProducts()
    },[dispatch])
    
+   if(error){
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>Some Thing Went Wrong</Text>
+          <CButton title="Try Again" onPress={loadProducts} />
+        </View>
+      );
+   }
 
    if(isLoading){
      return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
@@ -42,7 +59,7 @@ const ProductsOverview: FC = (props: any) => {
          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
        >
          <Text>There are no products</Text>
-         <CButton title='Try Again' onPress={() => {  }} />
+         <CButton title='Try Again' onPress={loadProducts} />
        </View>
      );
    }

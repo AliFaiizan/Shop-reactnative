@@ -11,27 +11,33 @@ export const deleteProduct=(prodId:string) => {
 
 export const fetchProducts=() => { 
     return async (dispatch:Function )=>{
+        //error handling
+        try{
+             const responce = await fetch(
+               "https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json"
+             );
+            if(!responce.ok){
+                throw new Error('something went wrong')
+            }
+             const resData = await responce.json();
+             console.log(resData);
+             const loadedProducts = [];
+             for (const key in resData) {
+               const { title, description, imageUrl, price } = resData[key];
+               loadedProducts.push({
+                 key,
+                 ownerId: "u1",
+                 title,
+                 description,
+                 imageUrl,
+                 price,
+               });
+             }
 
+             dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+        }catch {(err:any) => { console.log(err) }}
     //any async code you want
-    const responce = await fetch('https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json')
-
-    const resData= await responce.json();
-        console.log(resData)
-    const loadedProducts=[];
-    for( const key in resData){
-
-        const {title,description,imageUrl,price}=resData[key]
-        loadedProducts.push({
-          key,
-          ownerId:'u1',
-          title,
-          description,
-          imageUrl,
-          price,
-        });
-    }
-
-    dispatch({type:SET_PRODUCTS,products:loadedProducts})
+   
 
  }}
 
