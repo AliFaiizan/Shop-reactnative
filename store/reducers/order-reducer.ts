@@ -1,5 +1,5 @@
 import Order from '../../models/order'
-import { ADD_ORDER } from '../actions/order-action';
+import { ADD_ORDER, SET_ORDER } from '../actions/order-action';
 
 type state={
     orders:Array<Order>
@@ -22,6 +22,11 @@ export default (state=initialState,action:any)=>{
             return {
                 orders:state.orders.concat(newOrder)
             }
+        case SET_ORDER:{
+            return {
+                orders:action.orders
+            }
+        }
     }
     return state;
 }

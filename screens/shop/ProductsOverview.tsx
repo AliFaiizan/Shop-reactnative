@@ -35,12 +35,12 @@ const ProductsOverview: FC = (props: any) => {
  
    //thsi will be attached after componetn is loaded first time thats why we need another use effect
    useEffect(() => {
-     const willFocusSub=props.navigation.addListener("willFocus", () => {
-       loadProducts();
-     });
-     return () => {
-       willFocusSub.remove();
-     }
+     
+     const willFocusSub=props.navigation.addListener("focus", loadProducts);
+     
+    //  return () => {
+    //    willFocusSub.remove();
+    //  }
    }, [loadProducts]);
 
    // this will be called when module reloades

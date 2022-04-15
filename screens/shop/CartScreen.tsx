@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList ,Alert} from "react-native";
+import React ,{useState}from "react";
+import { StyleSheet, Text, View, FlatList ,Alert, ActivityIndicator} from "react-native";
 import CButton from "../../components/shop/Button";
 import { Color } from "../../constants/Colors";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -31,6 +31,24 @@ const CartScreen = (props: any) => {
     );
   });
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const sendOrderHandler = async() => {
+    setIsLoading(true);
+    if (cartAmount <= 0) {
+      Alert.alert("CART IS EMPTY", "There is nothing to order", [
+        {
+          text: "OK",
+          style: "default",
+        },
+      ]);
+    } else {
+     await dispatch(OrderAction.add_Order(cartItems, cartAmount)); //order functionality
+     setIsLoading(false)
+    }
+  }; 
+
+
   
   let dispatch = useDispatch();
   const { screen, summary, summaryText, amount } = styles; //extraction styles
@@ -40,22 +58,15 @@ const CartScreen = (props: any) => {
         <Text style={summaryText}>
           Total: <Text style={amount}>${cartAmount.toFixed(2)}</Text>
         </Text>
-        <CButton
-          title="OrderNow"
-          color={Color.Primary}
-          onPress={() => {
-            if (cartAmount <= 0) {
-              Alert.alert("CART IS EMPTY", "There is nothing to order", [
-                {
-                  text: "OK",
-                  style:'default',
-                },
-              ]);
-          }else{
-            dispatch(OrderAction.add_Order(cartItems, cartAmount)); //order functionality
-          }
-          } }
+        {isLoading ? (  // if loading than show activity indicator
+          <ActivityIndicator size="large" color={Color.Primary} />
+        ) : (
+          <CButton
+            title="OrderNow"
+            color={Color.Primary}
+            onPress={sendOrderHandler}
           />
+        )}
       </Card>
       <FlatList
         data={cartItems}
