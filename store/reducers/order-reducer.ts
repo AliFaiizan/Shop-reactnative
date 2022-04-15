@@ -13,10 +13,10 @@ export default (state=initialState,action:any)=>{
     switch(action.type){
         case ADD_ORDER:
             const newOrder:Order = {
-              id: new Date().toString(),
+              id: action.orderData.id,
               item: action.orderData.item,
               totalAmount: action.orderData.amount,
-              date: new Date(),
+              date: action.orderData.date,
             };
          
             return {

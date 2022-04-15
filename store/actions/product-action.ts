@@ -31,7 +31,7 @@ export const fetchProducts=() => {
                 throw new Error('something went wrong')
             }
              const resData = await responce.json();
-             console.log(resData);
+             
              const loadedProducts = [];
              for (const key in resData) {
                const { title, description, imageUrl, price } = resData[key];
