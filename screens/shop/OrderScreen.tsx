@@ -1,5 +1,5 @@
 import { Text, FlatList } from "react-native";
-import React ,{useEffect} from "react";
+import React ,{useEffect, useState} from "react";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CHeaderButton from "../../components/UI/CHeaherButton";
@@ -7,6 +7,8 @@ import OrderItem from "../../components/shop/OrderItem";
 import * as OrderActions from '../../store/actions/order-action'
 
 const OrderScreen = () => {
+
+  const [isLoading,setIsLoading]= useState(false)
   const dispatch= useDispatch();
 
 
@@ -33,6 +35,7 @@ const OrderScreen = () => {
     </>
   );
 };
+///suctom comment
 //screen options for order screen
 export const screenOptions = (navData: any) => {
   return {
