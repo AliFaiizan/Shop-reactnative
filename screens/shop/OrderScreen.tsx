@@ -1,10 +1,11 @@
-import { Text, FlatList } from "react-native";
+import { Text, FlatList, ActivityIndicator, View } from "react-native";
 import React ,{useEffect, useState} from "react";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CHeaderButton from "../../components/UI/CHeaherButton";
 import OrderItem from "../../components/shop/OrderItem";
 import * as OrderActions from '../../store/actions/order-action'
+import { Color } from "../../constants/Colors";
 
 const OrderScreen = () => {
 
@@ -17,6 +18,16 @@ const OrderScreen = () => {
   
     
   }, [dispatch])
+
+  if(isLoading){
+     return (
+       <View
+         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+       >
+         <ActivityIndicator size="large" color={Color.Primary} />
+       </View>
+     );
+  }
   
 
   const orders = useSelector((state: RootStateOrAny) => {

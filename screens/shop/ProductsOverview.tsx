@@ -14,7 +14,8 @@ import CButton from "../../components/shop/Button";
 
 const ProductsOverview: FC = (props: any) => {
   let dispatch = useDispatch();
-   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); 
+  const [isRefreshiing, setIsRefreshing] = useState(false);
   const [error,setError]=useState(false)
   const products = useSelector(
     (state: RootStateOrAny) => state.products.availableProducts
@@ -22,7 +23,7 @@ const ProductsOverview: FC = (props: any) => {
 
    const loadProducts = useCallback(async () => {
      setError(false)
-     setIsLoading(true);
+     setIsRefreshing(true)
      try {
        await dispatch(ProductActions.fetchProducts());
      } catch {
@@ -30,13 +31,13 @@ const ProductsOverview: FC = (props: any) => {
          setError(true);
        };
      }
-     setIsLoading(false);
+     setIsRefreshing(false)
    },[dispatch,setIsLoading])
  
    //thsi will be attached after componetn is loaded first time thats why we need another use effect
    useEffect(() => {
      
-     const willFocusSub=props.navigation.addListener("focus", loadProducts);
+    props.navigation.addListener("focus", loadProducts);
      
     //  return () => {
     //    willFocusSub.remove();
@@ -45,7 +46,10 @@ const ProductsOverview: FC = (props: any) => {
 
    // this will be called when module reloades
   useEffect(() => { 
-    loadProducts()
+    setIsLoading(true);
+    loadProducts().then(() => { 
+      setIsLoading(false)
+     })
    },[dispatch])
    
    if(error){
@@ -77,6 +81,8 @@ const ProductsOverview: FC = (props: any) => {
   return (
     <View style={{ backgroundColor: Color.skin }}>
       <FlatList
+        onRefresh={loadProducts}
+        refreshing={isRefreshiing}
         data={products}
         renderItem={(itemData) => {
           return (
