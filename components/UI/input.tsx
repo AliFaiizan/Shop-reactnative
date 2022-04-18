@@ -78,7 +78,7 @@ const input = (props: any) => {
         value={inputState.value}
         onChangeText={textChangeHandler}
         onEndEditing={() => {
-          console.log("on exit editting");
+          //on end editing
         }}
         onBlur={lostFocusHandler}
       ></TextInput>

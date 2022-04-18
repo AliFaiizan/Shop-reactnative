@@ -34,7 +34,7 @@ type fState = {
 };
 
 const formReducer = (state: any, action: any): fState => {
-  if (action.type === "FORM_INPUT_UPDATE") {
+  if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
       [action.input]: action.value,
