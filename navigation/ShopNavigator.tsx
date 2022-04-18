@@ -21,6 +21,7 @@ import UserProductsScreen, {screenOptions as UserProductsOptions} from "../scree
 import EditProductScreen, {
   screenOptions as EditProductsOptions,
 } from "../screens/user/EditProduct";
+import AuthScreen ,{screenOptions as AuthOptions} from "../screens/user/AuthScreen";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -30,11 +31,22 @@ import CustomDrawer from "../components/shop/CustomDrawer";
 
 
 
+
 //Stack Creation
 
 const productsStack = createNativeStackNavigator();
 const orderStack = createNativeStackNavigator();
 const shopDrawer = createDrawerNavigator();
+const authStack= createNativeStackNavigator();
+
+
+const AuthNavigator=() => {
+  return (
+    <authStack.Navigator screenOptions={defaultNavigationOption}>
+      <authStack.Screen name="auth" component={AuthScreen} options={AuthOptions} />
+    </authStack.Navigator>
+  );
+}
 
 
 
@@ -136,7 +148,8 @@ const ShopDrawerNavigator = () => {
 const AppNavigator = (props: any) => {
   return (
     <NavigationContainer>
-      <ShopDrawerNavigator />
+      {true && <AuthNavigator />}
+      {false && <ShopDrawerNavigator />}
     </NavigationContainer>
   );
 };
