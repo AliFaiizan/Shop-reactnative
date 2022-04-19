@@ -5,11 +5,11 @@ export const UPDATE_PRODUCT='UPDATE_PRODUCT';
 export const SET_PRODUCTS='SET_PRODUCTS';
 
 //this will delete item from store
-export const deleteProduct=(prodId:string) => { 
+export const deleteProduct=(prodId:string,state:any) => { 
      return async(dispatch:Function)=>{
-
+    const token = state().auth.token;
     const response=await fetch(
-    `https://onlineshop-e7753-default-rtdb.firebaseio.com/products/${prodId}.json`,
+    `https://onlineshop-e7753-default-rtdb.firebaseio.com/products/${prodId}.json?auth=${token}`,
     {
         method: "DELETE",
     });
@@ -21,7 +21,7 @@ export const deleteProduct=(prodId:string) => {
 }}
 
 export const fetchProducts=() => { 
-    return async (dispatch:Function )=>{
+    return async (dispatch:Function,state:any )=>{
         //error handling
         try{
              const responce = await fetch(
@@ -55,29 +55,39 @@ export const fetchProducts=() => {
 //action for creating item in store
 export const createProduct=(title:string,description:string,imageUrl:string,price:number)=>{
 
-    return async (dispatch:Function )=>{
-        console.log({title,description,imageUrl,price})
+    return async (dispatch: Function, state: any) => {
+       const token = state().auth.token;
+      console.log({ title, description, imageUrl, price });
       //any async code you want
-       const responce = await fetch('https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json',{
-            method:'POST',
-            headers:{
-                'Content-type':'application.json'
-            },
-            body:JSON.stringify({
-                title,description,imageUrl,price
-            })
-        })
-
-      const resData= await responce.json();
-
-      
-      dispatch ({
-        type:CREATE_PRODUCT,
-        productData:{
-            id:resData.name,title,description,imageUrl,price,
+      const responce = await fetch(
+        `https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json?auth=${token}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application.json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            imageUrl,
+            price,
+          }),
         }
-    })
-    }
+      );
+
+      const resData = await responce.json();
+
+      dispatch({
+        type: CREATE_PRODUCT,
+        productData: {
+          id: resData.name,
+          title,
+          description,
+          imageUrl,
+          price,
+        },
+      });
+    };
 
     
 }
@@ -86,34 +96,36 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
 
 export const updateProduct=(id:string,title:string,description:string,imageUrl:string,price:number) => { 
     
-    return async(dispatch:Function)=>{
-
-          const response=await fetch(
-           `https://onlineshop-e7753-default-rtdb.firebaseio.com/products/${id}.json`,
-           {
-             method: "PATCH",
-             headers: {
-               "Content-type": "application.json",
-             },
-             body: JSON.stringify({
-               title,
-               description,
-               imageUrl,
-               price,
-             }),
-           }
-         );
-
-         if(!response.ok){
-           throw new Error("Something went wrong")
-         }
-        
-        
-        dispatch({
-        type:UPDATE_PRODUCT,
-        id,
-        productData:{
-            title,description,imageUrl,price
+    return async (dispatch: Function, state: any) => {
+      const token = state().auth.token;
+      const response = await fetch(
+        `https://onlineshop-e7753-default-rtdb.firebaseio.com/products/${id}.json?auth=${token}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application.json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            imageUrl,
+            price,
+          }),
         }
-         })
- }}
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      dispatch({
+        type: UPDATE_PRODUCT,
+        id,
+        productData: {
+          title,
+          description,
+          imageUrl,
+          price,
+        },
+      });
+    };}

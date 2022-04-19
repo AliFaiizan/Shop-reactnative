@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View , ScrollView, KeyboardAvoidingView } from 'react-native';
-import React ,{useReducer , useCallback} from 'react';
+import { StyleSheet, Text, View , ScrollView, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native';
+import React ,{useReducer , useCallback , useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import CInput from '../../components/UI/input';
@@ -47,9 +47,15 @@ const formReducer = (state: any, action: any): fState => {
 };
 
 
-const AuthScreen = () => {
+
+
+const AuthScreen:Function = () => {
 
     const dispatch=useDispatch();
+
+    const [isSingUp,setIsSignUp]=useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const [formState, dispatchFormState] = useReducer(formReducer, {
       inputValues: {
@@ -64,9 +70,28 @@ const AuthScreen = () => {
     });
 
 
-    const signUpHandler=() => {
-        dispatch(authActions.signUp(formState.inputValues.email,formState.inputValues.password))
-    }
+    useEffect(() => {
+      if(error){
+        Alert.alert("Error",error,[{text:'ok'}])
+      }
+    }, [error]);
+
+    const authHandler= async() => {
+      let action;
+      if(isSingUp){
+        action=authActions.signUp(formState.inputValues.email,formState.inputValues.password)
+       }else{
+         action=authActions.login(formState.inputValues.email,formState.inputValues.password)
+       }
+       setError(null)
+       setIsLoading(true);
+       try{
+         await dispatch(action)
+        }catch(err:any){
+          setError(err.message)
+        }
+        setIsLoading(false);
+       }
 
   const textChangeHandler = useCallback(
     (inputValue: any, inputValidity: boolean, inputIdentifier: string) => {
@@ -113,10 +138,12 @@ const AuthScreen = () => {
               initialValue=""
             />
             <View style={buttonContainer}>
-              <CButton title="Login" color={Color.Primary} onPress={signUpHandler} />
+              {isLoading?<ActivityIndicator size='small' color={Color.Primary}/>:<CButton title={isSingUp?'SingUp':"Login"} color={Color.Primary} onPress={authHandler} />}
             </View>
             <View style={buttonContainer}>
-              <CButton title="SignUp" color={Color.Accent} onPress={() => {}} />
+              <CButton title={`Switch to ${isSingUp?"Login":"SingUp"}`} color={Color.Accent} onPress={() => {
+                setIsSignUp(prevState=>!prevState)
+              }} />
             </View>
           </ScrollView>
         </Card>

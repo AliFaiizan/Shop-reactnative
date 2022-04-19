@@ -5,12 +5,12 @@ export const SET_ORDER = "SET_ORDER";
 import Order from '../../models/order';
 
 export const add_Order = (cartItem: any, totalAmount: any) => {
-  return async (dispatch: any) => {
+  return async (dispatch: any,state:any) => {
     const date = new Date().toISOString();
-
+     const token = state().auth.token;
     try {
       const responce = await fetch(
-        "https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/u1.json",
+        `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/u1.json?auth=${token}`,
         {
           method: "POST",
           headers: {
