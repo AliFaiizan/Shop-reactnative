@@ -1,9 +1,13 @@
 import { GOOGLE_API } from "../../secrets";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-export const SIGN_UP='SING_UP';
-export const LOGIN='LOGIN';
+export const AUTHENTICATE='AUTHENTICATE';
 
+
+export const authenticate=(userId:any,token:any) => { 
+  return {type:AUTHENTICATE,userId,token}
+ }
 
 export const signUp=(email:any,password:any) => { 
     return async (dispatch:any)=>{
@@ -34,7 +38,10 @@ export const signUp=(email:any,password:any) => {
 
         console.log(resData)
 
-        dispatch({type:SIGN_UP , token:resData.idToken, userId:resData.localId})
+         dispatch(authenticate(resData.localId,resData.idToken));
+         const expirationDate =
+           new Date().getTime() + +resData.expiresIn * 1000; //plus converts it into number
+         saveDataToStorage(resData.idToken, resData.localId, expirationDate);
     }
  }
 
@@ -70,6 +77,17 @@ export const signUp=(email:any,password:any) => {
 
      console.log(resData);
 
-     dispatch({ type: LOGIN, token:resData.idToken, userId:resData.localId });
+    dispatch(authenticate(resData.localId, resData.idToken));
+     const expirationDate=new Date().getTime()+ +resData.expiresIn *1000  //plus converts it into number
+     saveDataToStorage(resData.idToken,resData.localId,expirationDate)
    };
  };
+
+
+ export const saveDataToStorage=(token:any,userId:any,expirationDate:any) => { 
+   AsyncStorage.setItem('userData',JSON.stringify({
+     token,
+     userId,
+     expirationDate
+   }))
+  }

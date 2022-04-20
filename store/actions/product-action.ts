@@ -36,10 +36,10 @@ export const fetchProducts=() => {
              
              const loadedProducts = [];
              for (const key in resData) {
-               const { title, description, imageUrl, price } = resData[key];
+               const { title, description, imageUrl, price ,ownerId} = resData[key];
                loadedProducts.push({
                  key,
-                 ownerId: userId,
+                 ownerId,
                  title,
                  description,
                  imageUrl,
