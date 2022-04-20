@@ -3,12 +3,14 @@ import PRODUCTS from '../../Data/dummy-data';
 import { CREATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCTS, UPDATE_PRODUCT } from '../actions/product-action';
 import Product from '../../models/product';
 
-const initialState={
-    availableProducts:PRODUCTS,
-    userProducts:PRODUCTS.filter((prod) => {
-      return prod.ownerid==='u1';
-    }
-    )
+type fState={
+  availableProducts:Array<Product>,
+  userProducts:Array<Product>
+}
+
+const initialState:fState={
+    availableProducts:[],
+    userProducts:[]
 }
 
 
@@ -18,7 +20,7 @@ export default function(state= initialState,action:any){
       case SET_PRODUCTS:
         return{
           availableProducts:action.products,
-          userProducts:action.products.filter((prod:any) => { return prod.id=== 'u1' })
+          userProducts:action.userProducts
         }
       case DELETE_PRODUCT:
         return {
@@ -33,7 +35,7 @@ export default function(state= initialState,action:any){
       case CREATE_PRODUCT:
         const newProduct: Product = {
           id: action.productData.id,
-          ownerid:'u1',
+          ownerid:action.productData.ownerId,
           title: action.productData.title,
           description: action.productData.description,
           imageUrl: action.productData.imageUrl,
@@ -51,7 +53,7 @@ export default function(state= initialState,action:any){
       //find the product with id
       const updatedProduct: Product = {
         id: action.id,
-        ownerid:'u1',
+        ownerid:action.productData.ownerId,
         title: action.productData.title,
         description: action.productData.description,
         imageUrl: action.productData.imageUrl,

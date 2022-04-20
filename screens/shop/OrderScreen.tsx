@@ -33,6 +33,16 @@ const OrderScreen = () => {
   const orders = useSelector((state: RootStateOrAny) => {
     return state.order.orders;
   });
+
+    if (orders.length === 0) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>You havn't placed any orders</Text>
+        </View>
+      );
+    }
   return (
     <>
       <FlatList

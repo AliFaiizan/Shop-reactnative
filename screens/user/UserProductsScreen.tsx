@@ -1,10 +1,10 @@
-import { FlatList , Alert } from 'react-native'
+import { FlatList , Alert, View ,Text} from 'react-native'
 import React from 'react'
 import ProductListItem from '../../components/shop/ProductListItem'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import CButton from '../../components/shop/Button'
 import { Color } from '../../constants/Colors'
-import * as CartAction from '../../store/actions/product-action' 
+import * as productAction from '../../store/actions/product-action' 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import CHeaderButton from '../../components/UI/CHeaherButton'
 import { DrawerActions } from '@react-navigation/native'
@@ -17,7 +17,7 @@ const UserProductsScreen = ({ navigation }: any) => {
   const deleteHandler= (id:string) => {
     Alert.alert("Confirmation","Are you sure you want to delete this item?",[
       {text:'NO',style:'default'},{text:"YES",style:'destructive',onPress:() => {
-        dispatch(CartAction.deleteProduct(id));
+        dispatch(productAction.deleteProduct(id));
         }}
     ])
   }
@@ -25,6 +25,12 @@ const UserProductsScreen = ({ navigation }: any) => {
   const userProduct = useSelector(
     (state: RootStateOrAny) => state.products.userProducts
   );
+
+  if(userProduct.length ===0){
+    return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+      <Text>No Product found , try creating them</Text>
+    </View>
+  }
 
   return (
     <FlatList

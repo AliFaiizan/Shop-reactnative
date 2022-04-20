@@ -8,9 +8,10 @@ export const add_Order = (cartItem: any, totalAmount: any) => {
   return async (dispatch: any,state:any) => {
     const date = new Date().toISOString();
      const token = state().auth.token;
+     const userId = state().auth.userId;
     try {
       const responce = await fetch(
-        `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/u1.json?auth=${token}`,
+        `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`,
         {
           method: "POST",
           headers: {
@@ -44,10 +45,12 @@ export const add_Order = (cartItem: any, totalAmount: any) => {
 };
 
 export const fetch_Orders = () => {
-  return async (dispatch: Function) => {
+  return async (dispatch: Function, state:any) => {
+
+    const userId = state().auth.userId;
     try {
       const responce = await fetch(
-        "https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/u1.json"
+        `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/${userId}.json`
       );
       if (!responce.ok) {
         throw new Error("something went wrong");

@@ -5,8 +5,8 @@ export const UPDATE_PRODUCT='UPDATE_PRODUCT';
 export const SET_PRODUCTS='SET_PRODUCTS';
 
 //this will delete item from store
-export const deleteProduct=(prodId:string,state:any) => { 
-     return async(dispatch:Function)=>{
+export const deleteProduct=(prodId:string) => { 
+     return async(dispatch:Function,state:any)=>{
     const token = state().auth.token;
     const response=await fetch(
     `https://onlineshop-e7753-default-rtdb.firebaseio.com/products/${prodId}.json?auth=${token}`,
@@ -23,9 +23,11 @@ export const deleteProduct=(prodId:string,state:any) => {
 export const fetchProducts=() => { 
     return async (dispatch:Function,state:any )=>{
         //error handling
+        const token = state().auth.token;
+        const userId= state().auth.userId;
         try{
              const responce = await fetch(
-               "https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json"
+               `https://onlineshop-e7753-default-rtdb.firebaseio.com/products.json?auth=${token}`
              );
             if(!responce.ok){
                 throw new Error('something went wrong')
@@ -37,7 +39,7 @@ export const fetchProducts=() => {
                const { title, description, imageUrl, price } = resData[key];
                loadedProducts.push({
                  key,
-                 ownerId: "u1",
+                 ownerId: userId,
                  title,
                  description,
                  imageUrl,
@@ -45,7 +47,7 @@ export const fetchProducts=() => {
                });
              }
 
-             dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+             dispatch({ type: SET_PRODUCTS, products: loadedProducts ,userProducts:loadedProducts.filter((prod) => { prod.ownerId===userId })});
         }catch {(err:any) => { console.log(err) }}
     //any async code you want
    
@@ -57,6 +59,7 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
 
     return async (dispatch: Function, state: any) => {
        const token = state().auth.token;
+       const userId = state().auth.userId;
       console.log({ title, description, imageUrl, price });
       //any async code you want
       const responce = await fetch(
@@ -71,6 +74,7 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
             description,
             imageUrl,
             price,
+            ownerId:userId
           }),
         }
       );
@@ -85,6 +89,7 @@ export const createProduct=(title:string,description:string,imageUrl:string,pric
           description,
           imageUrl,
           price,
+          ownerId:userId
         },
       });
     };
