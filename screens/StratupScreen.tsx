@@ -13,13 +13,15 @@ useEffect(() => {
   const tryLogin=async ()=>{
     const userData=await AsyncStorage.getItem('userData')
     if(!userData){
-      return console.log('no token')
+      dispatch(AuthActions.setDidTryAL())
+      return ;
     }
     const {token,userId,expirationDate}=JSON.parse(userData);
     const newDate=new Date(expirationDate);
 
     if(newDate<= new Date() ||!token || !userId ){
-      return console.log('token invalid or user not found')
+      dispatch(AuthActions.setDidTryAL());
+      return ;
     }
 
     dispatch(AuthActions.authenticate(userId,token))
@@ -29,7 +31,7 @@ useEffect(() => {
 
   return (
     <View style={styles.screen}>
-      <ActivityIndicator size='large' color={Color.Primary}>
+      <ActivityIndicator size='large' color={Color.Primary} />
     </View>
   )
 }

@@ -23,11 +23,14 @@ import EditProductScreen, {
 } from "../screens/user/EditProduct";
 import AuthScreen ,{screenOptions as AuthOptions} from "../screens/user/AuthScreen";
 
+import StratupScreen from "../screens/StratupScreen";
+
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import CustomDrawer from "../components/shop/CustomDrawer";
+import { useSelector } from "react-redux";
 
 
 
@@ -43,7 +46,7 @@ const authStack= createNativeStackNavigator();
 const AuthNavigator=() => {
   return (
     <authStack.Navigator screenOptions={defaultNavigationOption}>
-      <authStack.Screen name="auth" component={AuthScreen} options={AuthOptions} />
+      <authStack.Screen name="Auth" component={AuthScreen} options={AuthOptions} />
     </authStack.Navigator>
   );
 }
@@ -146,10 +149,13 @@ const ShopDrawerNavigator = () => {
 };
 
 const AppNavigator = (props: any) => {
+
+  const selectedScreen= useSelector((state:any)=>!!state.auth.token)
   return (
     <NavigationContainer>
-      {true && <AuthNavigator />}
-      {false && <ShopDrawerNavigator />}
+      {selectedScreen && <StratupScreen />}
+      {selectedScreen && <AuthNavigator />}
+      {selectedScreen && <ShopDrawerNavigator />}
     </NavigationContainer>
   );
 };

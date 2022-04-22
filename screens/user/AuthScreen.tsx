@@ -49,7 +49,7 @@ const formReducer = (state: any, action: any): fState => {
 
 
 
-const AuthScreen:Function = () => {
+const AuthScreen = () => {
 
     const dispatch=useDispatch();
 

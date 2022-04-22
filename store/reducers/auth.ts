@@ -1,4 +1,4 @@
-import { AUTHENTICATE} from "../actions/auth"
+import { AUTHENTICATE, SET_DID_TRY_AL} from "../actions/auth"
 
 const initialState={
     token:null,
@@ -11,7 +11,13 @@ export default (state=initialState,action:any)=>{
         case AUTHENTICATE:
             return{
                 token:action.token,
-                userId:action.userId
+                userId:action.userId,
+                didTryAL:true,
+            }
+        case SET_DID_TRY_AL:
+            return{
+                ...state,
+                didTryAL:true
             }
         // case SIGN_UP:
         //     return{
