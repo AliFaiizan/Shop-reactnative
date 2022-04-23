@@ -150,12 +150,14 @@ const ShopDrawerNavigator = () => {
 
 const AppNavigator = (props: any) => {
 
-  const selectedScreen= useSelector((state:any)=>!!state.auth.token)
+  const  isAuth= useSelector((state:any)=>!!state.auth.token)
+  const didTryAL=useSelector((state:any) => { return state.auth.didTryAL }) 
+
   return (
     <NavigationContainer>
-      {selectedScreen && <StratupScreen />}
-      {selectedScreen && <AuthNavigator />}
-      {selectedScreen && <ShopDrawerNavigator />}
+      { isAuth && <ShopDrawerNavigator />}
+      {!isAuth && didTryAL && <AuthNavigator />}
+      {!isAuth && !didTryAL && <StratupScreen />}
     </NavigationContainer>
   );
 };

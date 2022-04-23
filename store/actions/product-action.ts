@@ -46,8 +46,8 @@ export const fetchProducts=() => {
                  price,
                });
              }
-
-             dispatch({ type: SET_PRODUCTS, products: loadedProducts ,userProducts:loadedProducts.filter((prod) => { prod.ownerId===userId })});
+             const userProducts=loadedProducts.filter((prod) => { return  prod.ownerId===userId })
+             dispatch({ type: SET_PRODUCTS, products: loadedProducts ,userProducts});
         }catch {(err:any) => { console.log(err) }}
     //any async code you want
    

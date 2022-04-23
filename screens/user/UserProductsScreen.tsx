@@ -25,7 +25,7 @@ const UserProductsScreen = ({ navigation }: any) => {
   const userProduct = useSelector(
     (state: RootStateOrAny) => state.products.userProducts
   );
-
+    
   if(userProduct.length ===0){
     return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
       <Text>No Product found , try creating them</Text>
@@ -41,7 +41,7 @@ const UserProductsScreen = ({ navigation }: any) => {
             <CButton
               title="Edit"
               onPress={() => {
-                navigation.navigate("EditProduct", {id:item.id});
+                navigation.navigate("EditProduct", {id:item.key});
               }}
               color={Color.Accent}
             />

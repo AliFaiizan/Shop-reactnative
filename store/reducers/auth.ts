@@ -3,7 +3,7 @@ import { AUTHENTICATE, SET_DID_TRY_AL} from "../actions/auth"
 const initialState={
     token:null,
     userId:null,
-    didTryAutoLogin:false,
+    didTryAL:false,
 }
 
 export default (state=initialState,action:any)=>{

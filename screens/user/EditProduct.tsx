@@ -1,8 +1,6 @@
 import {
   ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
   View,
   Alert,
   ActivityIndicator
@@ -63,20 +61,18 @@ const EditProduct = ({ route, navigation }: any) => {
 
   const [isLoading,setIsLoading]=useState(false);
   const [isError, setError] = useState("");
-  const productId = route.params.id;
+  const productId = route?.params.id;
   const dispatch = useDispatch();
-  //console.log(params)
-
+  
   const editedProduct = useSelector((state: RootStateOrAny) => {
     return state.products.userProducts.find((prod: any) => {
-      return prod.id === productId;
+      return prod.key === productId;
     });
   });
+  
 
-  //console.log(editedProduct)
-
-  setIsLoading(true);
-  setError("")
+  // setIsLoading(true);
+ 
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -164,8 +160,6 @@ const EditProduct = ({ route, navigation }: any) => {
 
 
   const { Uform ,centered} = styles;
-
-
 
   if(isLoading){
     <View style={centered}>

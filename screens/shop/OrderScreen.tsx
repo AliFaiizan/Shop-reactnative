@@ -12,9 +12,13 @@ const OrderScreen = () => {
   const [isLoading,setIsLoading]= useState(false)
   const dispatch= useDispatch();
 
+  const loadingOrder=async() => {
+    await dispatch(OrderActions.fetch_Orders());
+  }
 
   useEffect(() => {
-    dispatch(OrderActions.fetch_Orders())
+   setIsLoading(true);
+  loadingOrder()
   
     
   }, [dispatch])

@@ -48,6 +48,7 @@ export const fetch_Orders = () => {
   return async (dispatch: Function, state:any) => {
 
     const userId = state().auth.userId;
+    
     try {
       const responce = await fetch(
         `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/${userId}.json`
@@ -56,7 +57,8 @@ export const fetch_Orders = () => {
         throw new Error("something went wrong");
       }
       const resData = await responce.json();
-
+      console.log(resData);
+     
       const loadedOrders = [];
       for (const key in resData) {
           
@@ -69,12 +71,15 @@ export const fetch_Orders = () => {
         }
         loadedOrders.push(newOrder);
       }
+      
 
       dispatch({ type: SET_ORDER, orders: loadedOrders });
     } catch {
       (err: any) => {
+        console.log('error')
         console.log(err);
       };
     }
+    
   };
 };

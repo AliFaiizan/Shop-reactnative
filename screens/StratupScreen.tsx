@@ -8,24 +8,25 @@ const StratupScreen = () => {
 
   const dispatch=useDispatch();
    
-  
-useEffect(() => { 
-  const tryLogin=async ()=>{
-    const userData=await AsyncStorage.getItem('userData')
-    if(!userData){
-      dispatch(AuthActions.setDidTryAL())
-      return ;
-    }
-    const {token,userId,expirationDate}=JSON.parse(userData);
-    const newDate=new Date(expirationDate);
-
-    if(newDate<= new Date() ||!token || !userId ){
+  const tryLogin = async () => {
+    const userData = await AsyncStorage.getItem("userData");
+    if (!userData) {
       dispatch(AuthActions.setDidTryAL());
-      return ;
+      return;
+    }
+    const { token, userId, expirationDate } = JSON.parse(userData);
+    const newDate = new Date(expirationDate);
+
+    if (newDate <= new Date() || !token || !userId) {
+      dispatch(AuthActions.setDidTryAL());
+      return;
     }
 
-    dispatch(AuthActions.authenticate(userId,token))
-  }
+    dispatch(AuthActions.authenticate(userId, token));
+  };
+  
+  useEffect(() => { 
+  
   tryLogin()
  },[dispatch])
 
