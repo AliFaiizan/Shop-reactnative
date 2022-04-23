@@ -12,41 +12,47 @@ const OrderScreen = () => {
   const [isLoading,setIsLoading]= useState(false)
   const dispatch= useDispatch();
 
-  const loadingOrder=async() => {
-    await dispatch(OrderActions.fetch_Orders());
-  }
-
+  
+  const loadingOrder = async () => {
+     await dispatch(OrderActions.fetch_Orders());
+  };
   useEffect(() => {
-   setIsLoading(true);
-  loadingOrder()
+  setIsLoading(true);
+   
+  loadingOrder().then(() => {
+     setIsLoading(false);
+  }).catch(() => { console.log('couldnot fetch the order') })
   
     
   }, [dispatch])
 
-  if(isLoading){
-     return (
-       <View
-         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-       >
-         <ActivityIndicator size="large" color={Color.Primary} />
-       </View>
-     );
-  }
+  
   
 
   const orders = useSelector((state: RootStateOrAny) => {
     return state.order.orders;
   });
+  console.log(orders);
+    
+    
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <ActivityIndicator size="large" color={Color.Primary} />
+      </View>
+    );
+  }
 
-    if (orders.length === 0) {
-      return (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text>You havn't placed any orders</Text>
-        </View>
-      );
-    }
+  if (orders.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>You havn't placed any orders</Text>
+      </View>
+    );
+  }
+  
   return (
     <>
       <FlatList

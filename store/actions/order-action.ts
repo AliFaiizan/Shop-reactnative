@@ -48,38 +48,33 @@ export const fetch_Orders = () => {
   return async (dispatch: Function, state:any) => {
 
     const userId = state().auth.userId;
-    
-    try {
-      const responce = await fetch(
-        `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/${userId}.json`
-      );
-      if (!responce.ok) {
-        throw new Error("something went wrong");
-      }
-      const resData = await responce.json();
-      console.log(resData);
-     
-      const loadedOrders = [];
-      for (const key in resData) {
-          
-        const {cartItem, totalAmount, date } = resData[key];
-        const newOrder:Order={
-            id:key,
-            item:cartItem,
-            totalAmount,
-            date:new Date(date)
-        }
-        loadedOrders.push(newOrder);
-      }
+    const token = state().auth.token;
+      try {
       
+       const responce = await fetch(
+         `https://onlineshop-e7753-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`
+       );
+       if (!responce.ok) {
+         throw new Error("something went wrong");
+       }
+       const resData = await responce.json();
 
-      dispatch({ type: SET_ORDER, orders: loadedOrders });
-    } catch {
-      (err: any) => {
-        console.log('error')
-        console.log(err);
-      };
-    }
+       const loadedOrders = [];
+       for (const key in resData) {
+         const { cartItem, totalAmount, date } = resData[key];
+         const newOrder: Order = {
+           id: key,
+           item: cartItem,
+           totalAmount,
+           date: new Date(date),
+         };
+         loadedOrders.push(newOrder);
+       }
+
+       dispatch({ type: SET_ORDER, orders: loadedOrders });
+     } catch {
+       (err: any) => {};
+     }
     
   };
 };

@@ -21,15 +21,14 @@ export default (state=initailState,action:any)=>{
     switch (action.type) {
         //ADD TO CART
         case ADD_TO_CART:
-            const {id,price,title}=action.product;
-
-            if(state.item[id]){
+            const {key,price,title}=action.product;
+            if(state.item[key]){
                 // already have item in cart
                 updatedOrNewCartItem={
-                    quantity:state.item[id].quantity+1,
+                    quantity:state.item[key].quantity+1,
                     productTitle:title,
                     productPrice:price,
-                    sum:state.item[id].sum+price
+                    sum:state.item[key].sum+price
                 }
             }else{
                 updatedOrNewCartItem={
@@ -41,7 +40,7 @@ export default (state=initailState,action:any)=>{
             }
             return {
                 ...state,
-                item:{...state.item, [id]:updatedOrNewCartItem },
+                item:{...state.item, [key]:updatedOrNewCartItem },
                 totalAmount:state.totalAmount+price
             }
         //DELETE FROM CART

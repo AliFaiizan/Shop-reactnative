@@ -42,7 +42,6 @@ export const signUp=(email:any,password:any) => {
 
         const resData= await response.json();
 
-        console.log(resData)
 
          dispatch(authenticate(resData.localId,resData.idToken));
          const expirationDate =
@@ -78,10 +77,6 @@ export const signUp=(email:any,password:any) => {
      }
 
      const resData = await response.json();
-
-    
-
-     console.log(resData);
 
     dispatch(authenticate(resData.localId, resData.idToken));
      const expirationDate=new Date().getTime()+ +resData.expiresIn *1000  //plus converts it into number
